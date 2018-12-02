@@ -1,5 +1,5 @@
 {
-  "name": "yo-burrito",
+  "name": "yo_burrito",
   "description": "Reward your teammates with burritos!",
   "version": "1.0.0",
   "main": "src/index.js",
@@ -9,12 +9,12 @@
     "test": "standard"
   },
   "author": {
-    "email": "creager@heroku.com",
-    "name": "Matthew Creager",
-    "url": "https://twitter.com/matt_creager"
+    "email": "adsmith1217@gmail.com",
+    "name": "Adam Smith",
+    "url": "https://linkedin.com/in/adam-smith-74795973/"
   },
   "bugs": {
-    "url": "https://github.com/mattcreager"
+    "url": "https://github.com/adsmith1217"
   },
   "dependencies": {
     "body-parser": "^1.15.0",
