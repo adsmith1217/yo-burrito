@@ -16,7 +16,7 @@ bot.message((msg) => {
     // if (!_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`)) return
 
     //🌯
-    if(_.includes(msg.text.match(/:burrito:/igm))) {
+    if(_.includes(msg.text.match(/🌯/igm))) {
         slack.chat.postMessage({
             toekn: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
@@ -40,7 +40,7 @@ bot.message((msg) => {
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
             username: 'yo_burrito',
-            text: 'Hi, ' + msg.user + '! I\'m hey_taco\'s thrifty cousin'
+            text: 'Hi, ' + msg.user.name + '! I\'m yo_burrito, hey_taco\'s thrifty cousin'
         }, (err, data) => {
             if (err) throw err
     
