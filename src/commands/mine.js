@@ -3,6 +3,8 @@
 
 const _ = require('lodash')
 const config = require('../config')
+const mysql = require('mysql');
+const connection = mysql.createConnection(process.env.JAWSDB_URL);
 
 const msgDefaults = {
     response_type: 'in_channel',
@@ -20,6 +22,16 @@ let attachments = [
 
 const handler = (payload, res) => {
     console.log('mine command')
+
+    //
+    connection.connect();
+    connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+    if (err) throw err;
+    console.log('The solution is: ', rows[0].solution);
+    });
+    connection.end();
+    //
+    
     let msg = _.defaults({
         channel: payload.channel_name,
         attachments: attachments
