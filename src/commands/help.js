@@ -5,35 +5,36 @@ const _ = require('lodash')
 const config = require('../config')
 
 const msgDefaults = {
-  response_type: 'in_channel',
-  username: 'yo_burrito',
-  icon_emoji: config('ICON_EMOJI')
+    response_type: 'in_channel',
+    username: 'yo_burrito',
+    icon_emoji: config('ICON_EMOJI')
 }
 
 let attachments = [
-  {
-    title: 'yo_burrito gives virtual burritos to your coworkers',
-    color: '#2FA44F',
-    text: '`/burrito leaderboard` - top 10 burrito earners \n`/burrito mine` - your # of awarded burritos',
-    mrkdwn_in: ['text']
-  },
-  {
-    title: 'Configuring yo_burrito',
-    color: '#E3E4E6',
-    text: '`/burrito help` ... you\'re lookin at it! \n',
-    mrkdwn_in: ['text']
-  }
+    {
+        title: 'yo_burrito gives virtual burritos to your coworkers',
+        color: '#2FA44F',
+        text: '`/burrito leaderboard` - top 10 burrito earners \n`/burrito mine` - your # of awarded burritos',
+        mrkdwn_in: ['text']
+    },
+    {
+        title: 'Configuring yo_burrito',
+        color: '#E3E4E6',
+        text: '`/burrito help` ... you\'re lookin at it! \n',
+        mrkdwn_in: ['text']
+    }
 ]
 
 const handler = (payload, res) => {
-  let msg = _.defaults({
-    channel: payload.channel_name,
-    attachments: attachments
-  }, msgDefaults)
+    console.log('help command')
+    let msg = _.defaults({
+        channel: payload.channel_name,
+        attachments: attachments
+    }, msgDefaults)
 
-  res.set('content-type', 'application/json')
-  res.status(200).json(msg)
-  return
+    res.set('content-type', 'application/json')
+    res.status(200).json(msg)
+    return
 }
 
 module.exports = { pattern: /help/ig, handler: handler }
