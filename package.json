@@ -1,6 +1,6 @@
 {
-  "name": "starbot",
-  "description": "Starbot is GitHub's trending open-source page, reincarnated as a Slack bot",
+  "name": "yo-burrito",
+  "description": "Reward your teammates with burritos!",
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {

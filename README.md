@@ -1,18 +1,19 @@
-# 🌟 Starbot
+# 🌯 yo burrito
 
-![Starbot](https://heroku-www-files.s3.amazonaws.com/starbot/starbot-banner.png)
+![yo burrito](https://heroku-www-files.s3.amazonaws.com/starbot/starbot-banner.png)
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-Starbot is [GitHub's trending open-source](https://github.com/trending/) page, reincarnated as a Slack bot. It is also the sample referenced in the ["How to Deploy Your Slack Bots to Heroku"](https://blog.heroku.com/archives/2016/3/9/how-to-deploy-your-slack-bots-to-heroku) blog post.
+Reward your teammates with burritos!
 
 
 ### Supported `/slash` commands
 
-Create a `/starbot` [custom slash command](https://api.slack.com/slash-commands), using the URL: `{app-name}.herokuapp.com/commands/starbot`. *Take note of the provided `token`, this is used to verify requests come from Slack.*
+Create a `/burrito` [custom slash command](https://api.slack.com/slash-commands), using the URL: `{app-name}.herokuapp.com/commands/burrito`. *Take note of the provided `token`, this is used to verify requests come from Slack.*
 
-- `/starbot` or `/starbot help` - List available commands
-- `/starbot repos` - Display trending GitHub projects
+- `/burrito` or `/burrito help` - list available commands
+- `/burrito leaderboard` - top 10 burrito earners
+- `/burrito mine` - your # of awarded burritos
 
 ### Install
 
@@ -38,7 +39,7 @@ PORT=3000
 ```shell
 $ npm start
 
-🚀 Starbot LIVES on PORT 3000 🚀
+🚀 yo_burrito LIVES on PORT 3000 🚀
 ```
 
 Visit [localhost:3000](http://localhost:3000).
