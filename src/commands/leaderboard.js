@@ -14,8 +14,8 @@ let attachments = [
     {
         title: '🌯 leaderboard',
         color: '#2FA44F',
-        text: '#1\n' +
-                '#2\n' +
+        text: '#1: First Last - ##\n' +
+                '#2: First Last - ##\n' +
                 '...\n',
         mrkdwn_in: ['text']
     }

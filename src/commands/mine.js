@@ -12,11 +12,8 @@ const msgDefaults = {
 
 let attachments = [
     {
-        title: '🌯 leaderboard',
+        title: 'You have ## 🌯\'s',
         color: '#2FA44F',
-        text: '#1\n' +
-                '#2\n' +
-                '...\n',
         mrkdwn_in: ['text']
     }
 ]

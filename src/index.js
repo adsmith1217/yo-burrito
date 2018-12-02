@@ -36,9 +36,6 @@ app.post('/commands/burrito', (req, res) => {
     }
 
     let cmd = _.reduce(commands, (a, cmd) => {
-        console.log('a, cmd:'+a+', '+cmd)
-        console.log(a)
-        console.log(cmd)
         return payload.text.match(cmd.pattern) ? cmd : a
     }, helpCommand)
 
