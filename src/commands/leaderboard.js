@@ -12,17 +12,17 @@ const msgDefaults = {
 
 let attachments = [
     {
-        title: 'yo_burrito - because hey_taco was too expensive',
+        title: '🌯 leaderboard',
         color: '#2FA44F',
-        text: '`/burrito leaderboard` - top 10 burrito earners \n' +
-                '`/burrito mine` - your # of awarded burritos \n' +
-                '`/burrito help` ... you\'re lookin at it! \n',
+        text: '#1\n' +
+                '#2\n' +
+                '...\n',
         mrkdwn_in: ['text']
     }
 ]
 
 const handler = (payload, res) => {
-    console.log('help command')
+    console.log('leaderboard command')
     let msg = _.defaults({
         channel: payload.channel_name,
         attachments: attachments
@@ -33,4 +33,4 @@ const handler = (payload, res) => {
     return
 }
 
-module.exports = { pattern: /help/ig, handler: handler }
+module.exports = { pattern: /leaderboard/ig, handler: handler }
