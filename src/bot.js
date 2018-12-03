@@ -4,6 +4,8 @@
 const slack = require('slack')
 const _ = require('lodash')
 const config = require('./config')
+const mysql = require('mysql');
+const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL);
 
 let bot = slack.rtm.client()
 
@@ -12,12 +14,21 @@ bot.started((payload) => {
 })
 
 bot.message((msg) => {
-    console.log(`🤖🌯 Incoming message: "${msg.text}`)
-    // if (!msg.user) return
+    console.log(`🤖🌯 Incoming message: "${msg.text}"`)
+    if (!msg.user) return
     // if (!_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`)) return
 
     //🌯
-    if(_.includes(msg.text.match(/:burrito:/igm))) {
+    // if(_.includes(msg.text.match(/:burrito:/igm), )) {
+    if(_.includes(msg.text, ':burrito:')) {
+        // Query for # of burritos by user ID
+        connection.connect();
+        connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+        if (err) throw err;
+        console.log('Burrito given: ', rows[0].solution);
+        });
+        connection.end();
+
         slack.chat.postMessage({
             toekn: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
