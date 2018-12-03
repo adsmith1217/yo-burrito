@@ -44,8 +44,8 @@ bot.message((msg) => {
         console.log('givenTo', givenTo)
         let timestamp = + new Date()
         console.log('timestamp', timestamp)
-        let insertQuery = `INSERT INTO 'burritos_master' ('burrito_id', 'given_by_username', 'given_to_username', 'given_by_id', 'given_to_id', 'message', 'timestamp')` +
-        `VALUES (1, 'NULL', 'NULL', ${msg.user}, ${givenTo}, ${msg}, ${timestamp};`
+        let insertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username, given_to_username, given_by_id, given_to_id, message, timestamp)` +
+        `VALUES (1, 'NULL', 'NULL', ${msg.user}, ${givenTo}, ${msg}, ${timestamp});`
 
         connection.connect();
         connection.query(insertQuery, function(err, rows, fields) {
