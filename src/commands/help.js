@@ -6,13 +6,13 @@ const config = require('../config')
 
 const msgDefaults = {
     response_type: 'in_channel',
-    username: 'yo_burrito',
+    username: 'Yo Burrito',
     icon_emoji: config('ICON_EMOJI')
 }
 
 let attachments = [
     {
-        title: 'yo_burrito - because hey_taco was too expensive',
+        title: 'Yo Burrito - because hey_taco was too expensive',
         color: '#2FA44F',
         text: '`/burrito leaderboard` - top 10 burrito earners \n' +
                 '`/burrito mine` - your # of awarded burritos \n' +

@@ -6,7 +6,7 @@ const config = require('../config')
 
 const msgDefaults = {
     response_type: 'in_channel',
-    username: 'yo_burrito',
+    username: 'Yo Burrito',
     icon_emoji: config('ICON_EMOJI')
 }
 
@@ -21,6 +21,7 @@ let attachments = [
     }
 ]
 
+// TODO: model this handler off of the async/await approach of mine.js
 const handler = (payload, res) => {
     console.log('leaderboard command')
     let msg = _.defaults({

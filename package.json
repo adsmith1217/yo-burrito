@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node ./src",
-    "notify": "node ./src/tasks/notify",
+    "daily-reset": "node ./src/tasks/daily-reset",
     "test": "standard"
   },
   "author": {

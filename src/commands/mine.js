@@ -8,7 +8,7 @@ const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL);
 
 const msgDefaults = {
     response_type: 'in_channel',
-    username: 'yo_burrito',
+    username: 'Yo Burrito',
     icon_emoji: config('ICON_EMOJI')
 }
 
@@ -24,6 +24,7 @@ const handler = (payload, res) => {
     console.log('mine command')
 
     // Query for # of burritos by user ID
+    // TODO: use async/await
     var attachments = (result) => {
         connection.connect()
         connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = 'U9V5W2R9B'`, function(err, rows, fields) {

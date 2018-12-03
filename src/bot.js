@@ -26,7 +26,7 @@ bot.message((msg) => {
     //         token: config('SLACK_TOKEN'),
     //         icon_emoji: config('ICON_EMOJI'),
     //         channel: msg.channel,
-    //         username: 'yo_burrito',
+    //         username: 'Yo Burrito',
     //         text: 'Trying to send someone a 🌯? Try mentioning them using @'
     //     }, (err, data) => {
     //         if (err) throw err
@@ -45,6 +45,8 @@ bot.message((msg) => {
         let timestamp = + new Date()
 
         // TODO: add usernames and message context to insert query
+        // TODO: fix timestamp
+        // TODO: use async/await
         let insertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username, given_to_username, given_by_id, given_to_id, message, timestamp)` +
         `VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', NULL, '${timestamp}');`
         console.log('insertQuery', insertQuery)
@@ -54,14 +56,15 @@ bot.message((msg) => {
             if (err) throw err;
             console.log('Burrito given: ', rows[0]);
         });
+        // TODO: add insert query for burritos_by_user table
         connection.end();
 
-        // TODO: error handling and confirmation based on SQL result
+        // TODO: error handling and confirmation based on SQL result - add async/await first
         slack.chat.postMessage({
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
-            username: 'yo_burrito',
+            username: 'Yo Burrito',
             text: `Giving a burrito to ${givenTo}`
         }, (err, data) => {
             if (err) throw err
@@ -79,7 +82,7 @@ bot.message((msg) => {
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
-            username: 'yo_burrito',
+            username: 'Yo Burrito',
             text: `Hi, ${msg.user}! I\'m yo_burrito, hey_taco\'s thrifty cousin`
         }, (err, data) => {
             if (err) throw err

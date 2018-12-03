@@ -1,4 +1,5 @@
 
+// TODO: model for cron task - rework to reset daily burrito allowance in burritos_by_user
 'use strict'
 
 const _ = require('lodash')
@@ -13,7 +14,7 @@ bot.configureIncomingWebhook({ url: config('WEBHOOK_URL') })
 
 const msgDefaults = {
     response_type: 'in_channel',
-    username: 'yo_burrito',
+    username: 'Yo Burrito',
     icon_emoji: config('ICON_EMOJI')
 }
 
