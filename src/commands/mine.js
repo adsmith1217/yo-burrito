@@ -12,7 +12,16 @@ const msgDefaults = {
     icon_emoji: config('ICON_EMOJI')
 }
 
-let result = 0
+// Query for # of burritos by user ID
+let result
+connection.connect()
+connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = 'U9V5W2R9B'`, function(err, rows, fields) {
+    if (err) throw err
+    result = rows[0].result
+    console.log('U9V5W2R9B has this many burritos: ', result)
+})
+connection.end()
+
 let attachments = [
     {
         title: `You have ${result} 🌯\'s`,
@@ -24,24 +33,15 @@ let attachments = [
 const handler = (payload, res) => {
     console.log('mine command')
 
-    // Query for # of burritos by user ID
-    connection.connect();
-    connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = 'U9V5W2R9B'`, function(err, rows, fields) {
-        if (err) throw err
-        result = rows[0].result
-        console.log('U9V5W2R9B has this many burritos: ', result)
-        
-        let msg = _.defaults({
-            channel: payload.channel_name,
-            attachments: attachments
-        }, msgDefaults)
-    
-        res.set('content-type', 'application/json')
-        res.status(200).json(msg)
-        return
-    });
-    connection.end();
 
+    let msg = _.defaults({
+        channel: payload.channel_name,
+        attachments: attachments
+    }, msgDefaults)
+
+    res.set('content-type', 'application/json')
+    res.status(200).json(msg)
+    return
 }
 
 module.exports = { pattern: /mine/ig, handler: handler }
