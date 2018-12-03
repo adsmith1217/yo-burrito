@@ -46,7 +46,7 @@ bot.message((msg) => {
 
         // TODO: add usernames and message context to insert query
         let insertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username, given_to_username, given_by_id, given_to_id, message, timestamp)` +
-        `VALUES (1, 'NULL', 'NULL', '${msg.user}', '${givenTo}', 'NULL', '${timestamp}');`
+        `VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', NULL, '${timestamp}');`
         console.log('insertQuery', insertQuery)
 
         connection.connect();
