@@ -12,27 +12,32 @@ const msgDefaults = {
     icon_emoji: config('ICON_EMOJI')
 }
 
-// Query for # of burritos by user ID
-let result
-connection.connect()
-connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = 'U9V5W2R9B'`, function(err, rows, fields) {
-    if (err) throw err
-    result = rows[0].result
-    console.log('U9V5W2R9B has this many burritos: ', result)
-})
-connection.end()
-
-let attachments = [
-    {
-        title: `You have ${result} 🌯\'s`,
-        color: '#2FA44F',
-        mrkdwn_in: ['text']
-    }
-]
+// let attachments = [
+//     {
+//         title: `You have ## 🌯\'s`,
+//         color: '#2FA44F',
+//         mrkdwn_in: ['text']
+//     }
+// ]
 
 const handler = (payload, res) => {
     console.log('mine command')
 
+    // Query for # of burritos by user ID
+    var attachments = (result) => {
+        connection.connect()
+        connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = 'U9V5W2R9B'`, function(err, rows, fields) {
+            if (err) throw err
+            let result = rows[0].result
+            console.log('U9V5W2R9B has this many burritos: ', result)
+        })
+        connection.end()
+        return {
+            title: `You have ${result} 🌯\'s`,
+            color: '#2FA44F',
+            mrkdwn_in: ['text']
+        }
+    }
 
     let msg = _.defaults({
         channel: payload.channel_name,
