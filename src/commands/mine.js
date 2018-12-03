@@ -4,7 +4,7 @@
 const _ = require('lodash')
 const config = require('../config')
 const mysql = require('mysql');
-const connection = mysql.createConnection(process.env.JAWSDB_URL);
+const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL);
 
 const msgDefaults = {
     response_type: 'in_channel',
@@ -31,7 +31,7 @@ const handler = (payload, res) => {
     });
     connection.end();
     //
-    
+
     let msg = _.defaults({
         channel: payload.channel_name,
         attachments: attachments
