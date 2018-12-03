@@ -12,6 +12,7 @@ const msgDefaults = {
     icon_emoji: config('ICON_EMOJI')
 }
 
+let result = 0
 let attachments = [
     {
         title: `You have ${result} 🌯\'s`,
@@ -27,7 +28,7 @@ const handler = (payload, res) => {
     connection.connect();
     connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = U9V5W2R9B`, function(err, rows, fields) {
         if (err) throw err
-        var result = rows[0].result
+        result = rows[0].result
         console.log('U9V5W2R9B has this many burritos: ', result)
     });
     connection.end();
