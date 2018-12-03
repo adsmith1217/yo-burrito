@@ -21,7 +21,7 @@ bot.message((msg) => {
     //🌯
     // if(_.includes(msg.text.match(/:burrito:/igm), )) {
     if(_.includes(msg.text, ':burrito:')) {
-        // Query for # of burritos by user ID
+        // Insert a burrito for the given user by the message sender
         connection.connect();
         connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
         if (err) throw err;
@@ -30,7 +30,7 @@ bot.message((msg) => {
         connection.end();
 
         slack.chat.postMessage({
-            toekn: config('SLACK_TOKEN'),
+            token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
             username: 'yo_burrito',
