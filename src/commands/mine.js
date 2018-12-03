@@ -14,7 +14,7 @@ const msgDefaults = {
 
 let attachments = [
     {
-        title: 'You have ## 🌯\'s',
+        title: `You have ${result} 🌯\'s`,
         color: '#2FA44F',
         mrkdwn_in: ['text']
     }
@@ -25,9 +25,10 @@ const handler = (payload, res) => {
 
     // Query for # of burritos by user ID
     connection.connect();
-    connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-    if (err) throw err;
-    console.log('The solution is: ', rows[0].solution);
+    connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = U9V5W2R9B`, function(err, rows, fields) {
+        if (err) throw err
+        var result = rows[0].result
+        console.log('U9V5W2R9B has this many burritos: ', result)
     });
     connection.end();
 
