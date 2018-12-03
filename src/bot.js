@@ -52,16 +52,17 @@ bot.message((msg) => {
         connection.connect();
         connection.query(insertQuery, function(err, rows, fields) {
             if (err) throw err;
-            console.log('Burrito given: ', rows[0].solution);
+            console.log('Burrito given: ', rows[0]);
         });
         connection.end();
 
+        // TODO: error handling and confirmation based on SQL result
         slack.chat.postMessage({
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
             username: 'yo_burrito',
-            text: `giving a burrito to ${givenTo}`
+            text: `Giving a burrito to ${givenTo}`
         }, (err, data) => {
             if (err) throw err
 
