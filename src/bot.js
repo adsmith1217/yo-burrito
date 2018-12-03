@@ -41,7 +41,7 @@ bot.message((msg) => {
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
     if(_.includes(msg.text, ':burrito:')) {
         let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
-        givenTo = givenTo[0].substring(2, givenTo.length - 1)
+        givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
         console.log('givenTo', givenTo)
         let timestamp = + new Date()
         console.log('timestamp', timestamp)
