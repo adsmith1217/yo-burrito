@@ -30,17 +30,18 @@ const handler = (payload, res) => {
         if (err) throw err
         result = rows[0].result
         console.log('U9V5W2R9B has this many burritos: ', result)
+        
+        let msg = _.defaults({
+            channel: payload.channel_name,
+            attachments: attachments
+        }, msgDefaults)
+    
+        res.set('content-type', 'application/json')
+        res.status(200).json(msg)
+        return
     });
     connection.end();
 
-    let msg = _.defaults({
-        channel: payload.channel_name,
-        attachments: attachments
-    }, msgDefaults)
-
-    res.set('content-type', 'application/json')
-    res.status(200).json(msg)
-    return
 }
 
 module.exports = { pattern: /mine/ig, handler: handler }
