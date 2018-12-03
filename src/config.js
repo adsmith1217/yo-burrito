@@ -14,6 +14,7 @@ const config = {
   BURRITO_COMMAND_TOKEN: process.env.BURRITO_COMMAND_TOKEN, // TODO: switch auth strategy to use signing secret https://api.slack.com/docs/verifying-requests-from-slack
   SLACK_TOKEN: process.env.SLACK_TOKEN,
   ICON_EMOJI: ':burrito:'
+  // TODO: add MySQL config to Heroku env vars
 }
 
 module.exports = (key) => {
