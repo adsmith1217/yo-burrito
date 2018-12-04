@@ -44,7 +44,7 @@ const handler = (payload, res) => {
     }
 
     a().then(console.log('async done'))
-    
+
     /*
     var attachments = (result) => {
         connection.connect()
