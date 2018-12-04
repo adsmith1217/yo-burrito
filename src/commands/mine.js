@@ -26,7 +26,7 @@ const handler = (payload, res) => {
     // Query for # of burritos by user ID
     // TODO: use async/await
 
-    async function attachments() {
+    var a = async function attachments() {
         console.log('async started')
         connection.connect()
         connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = 'U9V5W2R9B'`, function(err, rows, fields) {
@@ -43,8 +43,8 @@ const handler = (payload, res) => {
         }
     }
 
-    attachments().then(console.log('async done'))
-
+    a().then(console.log('async done'))
+    
     /*
     var attachments = (result) => {
         connection.connect()
