@@ -46,7 +46,7 @@ bot.message((msg) => {
 
         // TODO: add usernames and message context to insert query
         // TODO: fix timestamp
-        // TODO: use async/await
+        // TODO: use async/await - might not be able to use with MariaDBx
         let insertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username, given_to_username, given_by_id, given_to_id, message, timestamp)` +
         `VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', NULL, '${timestamp}');`
         console.log('insertQuery', insertQuery)
@@ -61,6 +61,7 @@ bot.message((msg) => {
 
         // TODO: error handling and confirmation based on SQL result - add async/await first
         slack.chat.postMessage({
+            response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
