@@ -14,15 +14,15 @@ let bot = require('./bot')
 let app = express()
 
 if (config('PROXY_URI')) {
-  app.use(proxy(config('PROXY_URI'), {
-    forwardPath: (req, res) => { return require('url').parse(req.url).path }
-  }))
+    app.use(proxy(config('PROXY_URI'), {
+        forwardPath: (req, res) => { return require('url').parse(req.url).path }
+    }))
 }
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => { res.send('\n 👋 🌍 yo_burrito is running \n') })
+app.get('/', (req, res) => { res.send('\n 👋🌍🌯 yo_burrito is running \n') })
 
 app.post('/commands/burrito', (req, res) => {
     let payload = req.body
@@ -39,7 +39,7 @@ app.post('/commands/burrito', (req, res) => {
         return payload.text.match(cmd.pattern) ? cmd : a
     }, helpCommand)
 
-  cmd.handler(payload, res)
+    cmd.handler(payload, res)
 })
 
 app.listen(config('PORT'), (err) => {

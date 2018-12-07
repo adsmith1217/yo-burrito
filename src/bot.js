@@ -15,7 +15,7 @@ bot.started((payload) => {
 
 bot.message((msg) => {
     console.log(`🤖🌯 Incoming message: "${msg.text}"`)
-    
+
     // 🚫🌯 no burrito: don't do anything
     if (!_.includes(msg.text, ':burrito:')) return
 
@@ -65,7 +65,7 @@ bot.message((msg) => {
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
             username: 'Yo Burrito',
-            text: `Giving a burrito to ${givenTo}`
+            text: `Giving a burrito to <@${givenTo}>`
         }, (err, data) => {
             if (err) throw err
 
@@ -86,9 +86,9 @@ bot.message((msg) => {
             text: `Hi, ${msg.user}! I\'m yo_burrito, hey_taco\'s thrifty cousin`
         }, (err, data) => {
             if (err) throw err
-    
+
             let txt = _.truncate(data.message.text)
-    
+
             console.log(`🤖🌯  I said: "${txt}"`)
         })
         return

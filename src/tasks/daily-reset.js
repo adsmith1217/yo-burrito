@@ -34,7 +34,7 @@ trending('javascript', (err, repos) => {
 
     bot.sendWebhook(msg, (err, res) => {
         if (err) throw err
-        
+
         console.log(`\n🚀  yo_burrito report delivered 🚀`)
     })
 })
