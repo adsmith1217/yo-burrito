@@ -59,7 +59,7 @@ bot.message((msg) => {
         // TODO: add insert query for burritos_by_user table
         connection.end();
 
-        // TODO: error handling and confirmation based on SQL result - add async/await first
+        // TODO: error handling and confirmation based on SQL result
         slack.chat.postMessage({
             response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
