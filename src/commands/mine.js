@@ -29,10 +29,10 @@ const handler = (payload, res) => {
     var a = async function attachments() {
         console.log('async started')
         connection.connect()
-        connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = 'U9V5W2R9B'`, function(err, rows, fields) {
+        connection.query(`SELECT COUNT(burrito_id) AS result FROM burritos_master WHERE given_to_id = '${payload.user_id}'`, function(err, rows, fields) {
             if (err) throw err
             let result = rows[0].result
-            console.log('U9V5W2R9B has this many burritos: ', result)
+            console.log(payload.user_id, ' has this many burritos: ', result)
         })
         connection.end()
         console.log('async returning')
