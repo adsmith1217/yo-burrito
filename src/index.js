@@ -26,8 +26,7 @@ app.get('/', (req, res) => { res.send('\n 👋🌍🌯 yo_burrito is running \n'
 
 app.post('/commands/burrito', (req, res) => {
     let payload = req.body
-    console.log('req')
-    console.log(req)
+    console.log('index req.body')
     console.log(req.body)
 
     if (!payload || payload.token !== config('BURRITO_COMMAND_TOKEN')) {
@@ -43,6 +42,8 @@ app.post('/commands/burrito', (req, res) => {
     }, helpCommand)
 
     cmd.handler(payload, res)
+    console.log('index res');
+    console.log(res);
 })
 
 app.listen(config('PORT'), (err) => {

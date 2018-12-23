@@ -22,10 +22,10 @@ const msgDefaults = {
 
 const handler = (payload, res) => {
     console.log('mine command')
+    console.log('handler payload')
+    console.log(payload)
 
     // Query for # of burritos by user ID
-    // TODO: use async/await
-
     var a = async function attachments() {
         console.log('async started')
         connection.connect()
