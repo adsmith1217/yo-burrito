@@ -10,23 +10,57 @@ const msgDefaults = {
     icon_emoji: config('ICON_EMOJI')
 }
 
-let attachments = [
-    {
-        title: '🌯 leaderboard',
-        color: '#2FA44F',
-        text: '#1: First Last - ##\n' +
-                '#2: First Last - ##\n' +
-                '...\n',
-        mrkdwn_in: ['text']
-    }
-]
+// let attachments = [
+//     {
+//         title: '🌯 leaderboard',
+//         color: '#2FA44F',
+//         text: '#1: First Last - ##\n' +
+//                 '#2: First Last - ##\n' +
+//                 '...\n',
+//         mrkdwn_in: ['text']
+//     }
+// ]
 
-// TODO: model this handler off of the async/await approach of mine.js
 const handler = (payload, res) => {
     console.log('leaderboard command')
+
+    function getAttachments() {
+        let leaderboardQuery = `SELECT user_id, total_burritos AS results FROM burritos_by_user
+        WHERE total_burritos > 0 LIMIT 10 ORDER BY total_burritos DESC, user_id DESC`
+        console.log('leaderboardQuery: '+leaderboardQuery)
+
+        connection.connect()
+        connection.query(leaderboardQuery, (err, rows, fields) => {
+            // TODO: send error message
+            if (err) throw err
+            let results = rows[0].results
+            console.log(payload.user_id, ' has this many burritos: ', result)
+        })
+        connection.end()
+
+        return {
+            title: `🌯 leaderboard`,
+            color: '#2FA44F',
+            text: getText(result),
+            mrkdwn_in: ['text']
+        }
+    }
+
+    // Process results into message text
+    function getText(results) {
+        let text = ''
+        let i = 1;
+        for(let item in results) {
+            text += `#${i} ${item.user_id} ${item.total_burritos}\n`
+            i++
+        }
+        return text
+    }
+
+    // Query for top 10 # of burritos by user ID
     let msg = _.defaults({
         channel: payload.channel_name,
-        attachments: attachments
+        attachments: getAttachments()
     }, msgDefaults)
 
     res.set('content-type', 'application/json')
@@ -35,3 +69,38 @@ const handler = (payload, res) => {
 }
 
 module.exports = { pattern: /leaderboard/ig, handler: handler }
+
+    /*
+        // Query for top 10 # of burritos by user ID
+    let msgAttachments = (result) => {
+        // TODO: fix query with proper field names
+        let leaderboardQuery = `SELECT * AS result FROM burritos_by_user
+        WHERE total_burritos > 0 LIMIT 10 ORDER BY total_burritos DESC, username DESC`
+        console.log('leaderboardQuery: '+leaderboardQuery)
+
+        connection.connect()
+        connection.query(leaderboardQuery, (err, rows, fields) => {
+            if (err) {
+                // TODO: send error message
+                throw err
+            }
+            let result = rows[0].result
+            console.log(payload.user_id, ' has this many burritos: ', result)
+        })
+        connection.end()
+
+        // Process results into message text
+        let msgText = (result) => {
+
+        }
+
+        return {
+            title: `🌯 leaderboard`,
+            color: '#2FA44F',
+            text: (msgText) => {
+                msgText
+            },
+            mrkdwn_in: ['text']
+        }
+    }
+    */

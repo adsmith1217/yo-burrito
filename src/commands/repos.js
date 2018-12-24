@@ -3,7 +3,7 @@
 
 const _ = require('lodash')
 const config = require('../config')
-const trending = require('github-trending')
+// const trending = require('github-trending')
 
 const msgDefaults = {
     response_type: 'in_channel',
@@ -13,6 +13,7 @@ const msgDefaults = {
 
 const handler = (payload, res) => {
     console.log('repos command')
+    /*
     trending('javascript', (err, repos) => {
         if (err) throw err
 
@@ -34,6 +35,7 @@ const handler = (payload, res) => {
         res.status(200).json(msg)
         return
     })
+    */
 }
 
 module.exports = { pattern: /repos/ig, handler: handler }
