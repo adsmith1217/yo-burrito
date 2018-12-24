@@ -35,13 +35,13 @@ const handler = (payload, res) => {
             if (err) throw err
             let result = rows[0].result
             console.log(payload.user_id, ' has this many burritos: ', result)
+            return {
+                title: `You have ${result} 🌯\'s`,
+                color: '#2FA44F',
+                mrkdwn_in: ['text']
+            }
         })
         connection.end()
-        return {
-            title: `You have ${result} 🌯\'s`,
-            color: '#2FA44F',
-            mrkdwn_in: ['text']
-        }
     }
 
     let msg = _.defaults({
