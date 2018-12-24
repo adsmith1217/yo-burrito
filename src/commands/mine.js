@@ -36,7 +36,7 @@ const handler = (payload, res) => {
             let result = rows[0].result
             console.log(payload.user_id, ' has this many burritos: ', result)
             return {
-                title: `You have ${result} 🌯\'s`,
+                title: `You have ${rows[0].result} 🌯\'s`,
                 color: '#2FA44F',
                 mrkdwn_in: ['text']
             }
