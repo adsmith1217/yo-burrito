@@ -26,7 +26,7 @@ const handler = (payload, res) => {
     // Query for # of burritos by user ID
     function getAttachments() {
         let mineQuery = `SELECT total_burritos AS result FROM burritos_by_user
-                WHERE user_id = ${payload.user_id}`
+                WHERE user_id = '${payload.user_id}'`
         console.log('mineQuery: '+mineQuery)
 
         connection.connect()

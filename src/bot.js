@@ -42,7 +42,7 @@ bot.message((msg) => {
 
         // Check if the generous burrito gifter can give a burrito
         let allowanceCheckQuery = `SELECT daily_allowance AS result FROM burritos_by_user
-                WHERE user_id = ${msg.user}`
+                WHERE user_id = '${msg.user}'`
         connection.connect()
         connection.query(allowanceCheckQuery, (err, rows, fields) => {
             if (err) throw err
@@ -64,21 +64,27 @@ bot.message((msg) => {
         // TODO: fix timestamp
         let masterInsertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username,
                 given_to_username, given_by_id, given_to_id, message, timestamp)` +
-                `VALUES (NULL, NULL, NULL, ${msg.user}, ${givenTo}, NULL, ${timestamp});`
-        // TODO: update to burrito_by_user schema
-        let byUserInsertQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
-                `VALUES ();`
+                `VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', NULL, '${timestamp}');`
+        let givenToUpdateQuery = `UPDATE burritos_by_user SET total_burritos = total_burritos + 1` +
+                `WHERE user_id = '${givenTo}';`
+        let allowanceUpdateQuery = `UPDATE burritos_by_user SET daily_allowance = daily_allowance - 1` +
+        `WHERE user_id = '${msg.given}';`
         console.log('masterInsertQuery', masterInsertQuery)
-        console.log('byUserInsertQuery', byUserInsertQuery)
+        console.log('givenToUpdateQuery', givenToUpdateQuery)
+        console.log('allowanceUpdateQuery', allowanceUpdateQuery)
 
         connection.connect()
         connection.query(masterInsertQuery, (err, rows, fields) => {
             if (err) throw err
             console.log('Added to burritos_master: ', rows[0])
         })
-        connection.query(byUserInsertQuery, (err, rows, fields) => {
+        connection.query(givenToUpdateQuery, (err, rows, fields) => {
             if (err) throw err
-            console.log('Added to burritos_by_user: ', rows[0])
+            console.log('Updated burritos_by_user given_to: ', rows[0])
+        })
+        connection.query(allowanceUpdateQuery, (err, rows, fields) => {
+            if (err) throw err
+            console.log('Updated burritos_by_user allowance: ', rows[0])
         })
         connection.end()
 
