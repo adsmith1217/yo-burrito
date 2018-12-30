@@ -33,6 +33,10 @@ const handler = (payload, res) => {
         connection.query(mineQuery, (err, rows, fields) => {
             // TODO: send error message
             if (err) throw err
+            console.log('rows[0]')
+            console.log(rows[0])
+            console.log('rows[0].result')
+            console.log(rows[0].result)
             let result = rows[0].result
             console.log(payload.user_id, ' has this many burritos: ', result)
             return {

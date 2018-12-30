@@ -20,7 +20,7 @@ bot.message((msg) => {
     if (_.includes(msg.text, '/burrito')) return
 
     // 🚫🌯 no burrito: don't do anything
-    if (!_.includes(msg.text, ':burrito:')) return
+    if (!_.includes(msg.text, 'burrito')) return
 
     // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
     if (!_.includes(msg.text, /<@([A-Z0-9])+>/igm)) {
