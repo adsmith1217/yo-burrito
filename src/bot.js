@@ -17,7 +17,7 @@ bot.message((msg) => {
     console.log(`🤖🌯 Incoming message: "${msg.text}"`)
 
     // Has /🌯: don't do anything
-    if (!_.includes(msg.text, '/burrito')) return
+    if (_.includes(msg.text, '/burrito')) return
 
     // 🚫🌯 no burrito: don't do anything
     if (!_.includes(msg.text, ':burrito:')) return
