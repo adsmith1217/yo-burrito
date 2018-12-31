@@ -34,7 +34,8 @@ const handler = (payload, res) => {
         connection.query(leaderboardQuery, (err, rows, fields) => {
             // TODO: send error message
             if (err) throw err
-            let results = rows[0].results
+            console.log('rows ', rows)
+            let results = rows.results
             console.log(payload.user_id, ' has this many burritos: ', results)
             return {
                 title: `🌯 leaderboard`,
