@@ -50,7 +50,7 @@ const handler = (payload, res) => {
         let text = ''
         let i = 0;
         for(let i = 0; i < 10; i++) {
-            if(typeof row[i] !== 'undefined') {
+            if(typeof rows[i] !== 'undefined') {
                 let row = rows[i]
                 console.log('row ', row)
                 text += `#${i++} <@${row.user_id}> ${row.total_burritos}\n`
