@@ -62,19 +62,14 @@ bot.message((msg) => {
     if(_.includes(msg.text, ':burrito:')) {
 
         // Check if the generous burrito gifter can give a burrito
-        let allowanceCheckQuery = `SELECT daily_allowance FROM burritos_by_user` +
-                ` WHERE user_id = '${msg.user}' LIMIT 1;`
-        console.log('allowanceCheckQuery', allowanceCheckQuery)
-
         const getAllowance = new Promise(
             (resolve, reject) => {
+                let allowanceCheckQuery = `SELECT daily_allowance FROM burritos_by_user` +
+                        ` WHERE user_id = '${msg.user}' LIMIT 1;`
+                console.log('allowanceCheckQuery', allowanceCheckQuery)
                 connection.query(allowanceCheckQuery, (err, rows, fields) => {
                     if (err) throw err
-                    console.log('rows[0] undefined check')
-                    console.log(rows)
-                    console.log(rows[0])
                     if(typeof rows[0] !== 'undefined') {
-                        console.log('made it through check')
                         let dailyAllowance = rows[0].daily_allowance
                         console.log(msg.user + ' daily allowance: ' + dailyAllowance)
                         if(dailyAllowance > 0) {
@@ -88,26 +83,9 @@ bot.message((msg) => {
             }
         )
 
-
-        // connection.query(allowanceCheckQuery, (err, rows, fields) => {
-        //     if (err) throw err
-        //     console.log('rows[0] undefined check')
-        //     console.log(rows)
-        //     console.log(rows[0])
-        //     if(typeof rows[0] !== 'undefined') {
-        //         console.log('made it through check')
-        //         let dailyAllowance = rows[0].daily_allowance
-        //         console.log(msg.user + ' daily allowance: ' + dailyAllowance)
-        //         if(dailyAllowance <= 0) {
-        //             console.log('not enough allowance')
-        //             return
-        //         }
-        //     }
-        // })
-
         const giveBurrito = function() {
             getAllowance
-                .then(res => {
+                .then(dailyAllowance => {
                     let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
                     givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
 
@@ -118,7 +96,7 @@ bot.message((msg) => {
                             response_type: 'ephemeral',
                             token: config('SLACK_TOKEN'),
                             icon_emoji: config('ICON_EMOJI'),
-                            channel: msg.channel,
+                            channel: msg.user,
                             username: 'Yo Burrito',
                             text: 'You can\'t give burritos to yourself, silly!'
                         }, (err, data) => {
@@ -161,16 +139,16 @@ bot.message((msg) => {
                         response_type: 'ephemeral',
                         token: config('SLACK_TOKEN'),
                         icon_emoji: config('ICON_EMOJI'),
-                        channel: msg.channel,
+                        channel: msg.user,
                         username: 'Yo Burrito',
-                        text: `Giving a burrito to <@${givenTo}>`
+                        text: `Giving a burrito to <@${givenTo}>, you have ${dailyAllowance - 1} burritos left to give today`
                     }, (err, data) => {
                         if (err) {
                             slack.chat.postMessage({
                                 response_type: 'ephemeral',
                                 token: config('SLACK_TOKEN'),
                                 icon_emoji: config('ICON_EMOJI'),
-                                channel: msg.channel,
+                                channel: msg.user,
                                 username: 'Yo Burrito',
                                 text: `There was an error sending your burrito to <@${givenTo}> :(`
                             })
@@ -186,7 +164,7 @@ bot.message((msg) => {
                     response_type: 'ephemeral',
                     token: config('SLACK_TOKEN'),
                     icon_emoji: config('ICON_EMOJI'),
-                    channel: msg.channel,
+                    channel: msg.user,
                     username: 'Yo Burrito',
                     text: error
                 }, (err, data) => {
