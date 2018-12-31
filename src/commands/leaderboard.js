@@ -50,8 +50,8 @@ const handler = (payload, res) => {
         let text = ''
         let i = 1;
         for(let row in rows) {
-            console.log('row ', row)
-            text += `#${i} ${row.user_id} ${row.total_burritos}\n`
+            console.log('row ', row[i])
+            text += `#${i} ${row[i].user_id} ${row[i].total_burritos}\n`
             i++
         }
         console.log('text ',text)
