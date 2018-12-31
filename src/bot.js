@@ -93,7 +93,7 @@ bot.message((msg) => {
 
         let timestamp = new Date().getTime()
 
-        // TODO: add usernames to insert query
+        // TODO: condense to one query and add usernames to insert query
         let masterInsertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username,` +
                 ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
                 ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msg.text}', '${timestamp}');`
