@@ -53,7 +53,7 @@ const handler = (payload, res) => {
             if(typeof rows[i] !== 'undefined') {
                 let row = rows[i]
                 console.log('row ', row)
-                text += `#${i++} <@${row.user_id}> ${row.total_burritos}\n`
+                text += `#${i + 1} <@${row.user_id}> ${row.total_burritos}\n`
             }
         }
         console.log('text ',text)
@@ -68,6 +68,7 @@ const handler = (payload, res) => {
 
     res.set('content-type', 'application/json')
     res.status(200).json(msg)
+    console.log(msg)
     return
 }
 
