@@ -81,7 +81,6 @@ bot.message((msg) => {
         console.log('givenToUpdateQuery', givenToUpdateQuery)
         console.log('allowanceUpdateQuery', allowanceUpdateQuery)
 
-        connection.connect()
         connection.query(masterInsertQuery, (err, rows, fields) => {
             if (err) throw err
             console.log('Added to burritos_master: ', rows[0])
