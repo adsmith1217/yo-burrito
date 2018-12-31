@@ -42,8 +42,6 @@ app.post('/commands/burrito', (req, res) => {
     }, helpCommand)
 
     cmd.handler(payload, res)
-    // console.log('index res');
-    // console.log(res);
 })
 
 app.listen(config('PORT'), (err) => {
