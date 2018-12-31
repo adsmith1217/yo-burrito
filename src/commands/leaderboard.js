@@ -36,14 +36,13 @@ const handler = (payload, res) => {
             if (err) throw err
             let results = rows[0].results
             console.log(payload.user_id, ' has this many burritos: ', results)
+            return {
+                title: `🌯 leaderboard`,
+                color: '#2FA44F',
+                text: getText(results),
+                mrkdwn_in: ['text']
+            }
         })
-
-        return {
-            title: `🌯 leaderboard`,
-            color: '#2FA44F',
-            text: getText(results),
-            mrkdwn_in: ['text']
-        }
     }
 
     // Process results into message text

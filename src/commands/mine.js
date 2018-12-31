@@ -53,7 +53,6 @@ const handler = (payload, res) => {
 
     res.set('content-type', 'application/json')
     res.status(200).json(msg)
-    console.log('res ', res)
     console.log('msg ', msg)
     return
 }
