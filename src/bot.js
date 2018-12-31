@@ -64,8 +64,8 @@ bot.message((msg) => {
     if(_.includes(msg.text, ':burrito:')) {
 
         // Check if the generous burrito gifter can give a burrito
-        let allowanceCheckQuery = `SELECT daily_allowance AS result FROM burritos_by_user` +
-                ` WHERE user_id = '${msg.user}';`
+        let allowanceCheckQuery = `SELECT daily_allowance FROM burritos_by_user` +
+                ` WHERE user_id = '${msg.user} LIMIT 1';`
         console.log('allowanceCheckQuery', allowanceCheckQuery)
         connection.query(allowanceCheckQuery, (err, rows, fields) => {
             if (err) throw err
@@ -74,9 +74,9 @@ bot.message((msg) => {
             console.log(rows[0])
             if(typeof rows[0] !== 'undefined') {
                 console.log('made it through check')
-                let result = rows[0].result
-                console.log(msg.user + ' daily allowance: ' + result)
-                if(result <= 0) {
+                let dailyAllowance = rows[0].daily_allowance
+                console.log(msg.user + ' daily allowance: ' + dailyAllowance)
+                if(dailyAllowance <= 0) {
                     console.log('not enough allowance')
                     return
                 }

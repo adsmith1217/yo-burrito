@@ -27,7 +27,7 @@ const handler = (payload, res) => {
     console.log('leaderboard command')
 
     function getAttachments() {
-        let leaderboardQuery = `SELECT user_id, total_burritos AS results FROM burritos_by_user` +
+        let leaderboardQuery = `SELECT user_id, total_burritos FROM burritos_by_user` +
         ` WHERE total_burritos > 0 ORDER BY total_burritos DESC, user_id DESC LIMIT 10;`
         console.log('leaderboardQuery: '+leaderboardQuery)
 
@@ -51,7 +51,7 @@ const handler = (payload, res) => {
         let i = 1;
         for(let row in rows) {
             console.log('row ', row[i])
-            text += `#${i} ${row[i].user_id} ${row[i].total_burritos}\n`
+            text += `#${i} <@${row[i].user_id}> ${row[i].total_burritos}\n`
             i++
         }
         console.log('text ',text)

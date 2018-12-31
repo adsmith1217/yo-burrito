@@ -25,7 +25,7 @@ const handler = (payload, res) => {
 
     // Query for # of burritos by user ID
     function getAttachments() {
-        let mineQuery = `SELECT total_burritos AS result FROM burritos_by_user` +
+        let mineQuery = `SELECT total_burritos FROM burritos_by_user` +
                 ` WHERE user_id = '${payload.user_id}';`
         console.log('mineQuery: '+mineQuery)
 
@@ -34,14 +34,16 @@ const handler = (payload, res) => {
             if (err) throw err
             console.log('rows[0]')
             console.log(rows[0])
-            console.log('rows[0].result')
-            console.log(rows[0].result)
-            let result = rows[0].result
-            console.log(payload.user_id, ' has this many burritos: ', result)
-            return {
-                title: `You have ${rows[0].result} 🌯\'s`,
-                color: '#2FA44F',
-                mrkdwn_in: ['text']
+            console.log('rows[0].total_burritos')
+            console.log(rows[0].total_burritos)
+            if(typeof rows[0] !== 'undefined') {
+                let totalBurritos = rows[0].total_burritos
+                console.log(payload.user_id, ' has this many burritos: ', totalBurritos)
+                return {
+                    title: `You have ${totalBurritos} 🌯\'s`,
+                    color: '#2FA44F',
+                    mrkdwn_in: ['text']
+                }
             }
         })
     }
