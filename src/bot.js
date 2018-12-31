@@ -63,7 +63,7 @@ bot.message((msg) => {
 
         // Check if the generous burrito gifter can give a burrito
         let allowanceCheckQuery = `SELECT daily_allowance FROM burritos_by_user` +
-                ` WHERE user_id = '${msg.user}' LIMIT 1';`
+                ` WHERE user_id = '${msg.user}' LIMIT 1;`
         console.log('allowanceCheckQuery', allowanceCheckQuery)
 
         // const getAllowance = new Promise(
