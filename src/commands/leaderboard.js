@@ -15,20 +15,22 @@ const msgDefaults = {
 const handler = (payload, res) => {
     console.log('leaderboard command')
 
-    let getAttachments = new Promise(
+    const getAttachments = new Promise(
         (resolve, reject) => {
-            console.log(1)
             let leaderboardQuery = `SELECT user_id, total_burritos FROM burritos_by_user` +
-                    ` WHERE total_burritos > 0 ORDER BY total_burritos DESC, user_id DESC LIMIT 10;`
+            ` WHERE total_burritos > 0 ORDER BY total_burritos DESC, user_id DESC LIMIT 10;`
             console.log('leaderboardQuery: '+leaderboardQuery)
             connection.query(leaderboardQuery, (err, rows, fields) => {
                 // TODO: send error message
                 if (err) reject(err)
                 console.log('rows ', rows)
+                console.log(1)
+                let formattedText = getFormattedText
+                console.log(4)
                 let res = {
                     title: `🌯 leaderboard`,
                     color: '#2FA44F',
-                    text: 'new Promise(getText(rows))',
+                    text: formattedText,
                     mrkdwn_in: ['text']
                 }
                 resolve(res)
@@ -36,7 +38,23 @@ const handler = (payload, res) => {
         }
     )
 
-    const func = function() {
+    const getFormattedText = function(rows) {
+        console.log(2)
+        console.log('getText for ', rows)
+        let text = ''
+        for(let i = 0; i < 10; i++) {
+            if(typeof rows[i] !== 'undefined') {
+                let row = rows[i]
+                console.log('row ', row)
+                text += `#${i + 1}: <@${row.user_id}> - ${row.total_burritos}\n`
+            }
+        }
+        console.log('text ',text)
+        console.log(3)
+        return text
+    }
+
+    const getLeaderboard = function() {
         getAttachments.then(fulfilled => {
             res.set('content-type', 'application/json')
             res.status(200).json(fulfilled)
@@ -45,8 +63,7 @@ const handler = (payload, res) => {
         })
     }
 
-    func();
-
+    getLeaderboard();
 
 /*
     // Query for top 10 # of burritos by user ID
@@ -83,7 +100,6 @@ const handler = (payload, res) => {
         console.log('getText')
         console.log('getText for ', rows)
         let text = ''
-        let i = 0;
         for(let i = 0; i < 10; i++) {
             if(typeof rows[i] !== 'undefined') {
                 let row = rows[i]
