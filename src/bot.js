@@ -15,7 +15,6 @@ bot.started((payload) => {
 
 bot.message((msg) => {
     console.log(`🤖🌯 Incoming message: "${msg.text}"`)
-    console.log(msg)
 
     // Has /🌯: don't do anything
     if (_.includes(msg.text, '/burrito')) return
@@ -27,7 +26,7 @@ bot.message((msg) => {
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
             username: 'Yo Burrito',
-            text: `Hi, ${msg.user}! :wave:\n` +
+            text: `Hi, <@${msg.user}>! :wave:\n` +
                     `I\'m yo_burrito, hey_taco\'s thrifty cousin\n` +
                     `Not sure what to do? Try \`/burrito\` for help`
         }, (err, data) => {
@@ -101,8 +100,8 @@ bot.message((msg) => {
         let givenToUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
                 ` VALUES ('${givenTo}', 1, 5, NULL) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + 1;`
         let allowanceUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
-                ` VALUES ('${msg.user}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - 1` +
-                ` last_activity = '${timestamp}';`
+                ` VALUES ('${msg.user}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - 1,` +
+                ` last_activity = ${timestamp};`
         console.log('masterInsertQuery', masterInsertQuery)
         console.log('givenToUpdateQuery', givenToUpdateQuery)
         console.log('allowanceUpdateQuery', allowanceUpdateQuery)
