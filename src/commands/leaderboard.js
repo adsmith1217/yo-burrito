@@ -40,16 +40,17 @@ const handler = (payload, res) => {
         }
         console.log('text ',text)
         let msg = _.defaults({
-                channel: payload.channel_name,
-                attachments: [
-                    {
-                        title: `🌯 Leaderboard`,
-                        color: '#2FA44F',
-                        text: text,
-                        mrkdwn_in: ['text']
-                    }
-                ]
-            }, msgDefaults)
+            channel: payload.channel_name,
+            attachments: [
+                {
+                    title: `🌯 Leaderboard`,
+                    color: '#2FA44F',
+                    text: text,
+                    mrkdwn_in: ['text']
+                }
+            ]
+        }, msgDefaults)
+
         return Promise.resolve(msg)
     }
 

@@ -34,11 +34,18 @@ const handler = (payload, res) => {
                 if(typeof rows[0] !== 'undefined') {
                     let totalBurritos = rows[0].total_burritos
                     console.log(payload.user_id, ' has this many burritos: ', totalBurritos)
-                    let msg = {
-                        text: `You have ${totalBurritos} 🌯\'s`,
-                        color: '#2FA44F',
-                        mrkdwn_in: ['text']
-                    }
+                    let msg = _.defaults({
+                        channel: payload.channel_name,
+                        attachments: [
+                            {
+                                title: `🌯 Leaderboard`,
+                                color: '#2FA44F',
+                                text: `You have ${totalBurritos} burritos`,
+                                mrkdwn_in: ['text']
+                            }
+                        ]
+                    }, msgDefaults)
+
                     resolve(msg)
                 }
             })
