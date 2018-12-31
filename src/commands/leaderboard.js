@@ -23,22 +23,12 @@ const handler = (payload, res) => {
             connection.query(leaderboardQuery, (err, rows, fields) => {
                 // TODO: send error message
                 if (err) reject(err)
-                console.log('rows ', rows)
-                console.log(1)
-                // let formattedText = getFormattedText
-                // let res = {
-                //     title: `🌯 leaderboard`,
-                //     color: '#2FA44F',
-                //     text: formattedText,
-                //     mrkdwn_in: ['text']
-                // }
                 resolve(rows)
             })
         }
     )
 
     const getFormattedText = function(rows) {
-        console.log(2)
         console.log('getText for ', rows)
         let text = ''
         for(let i = 0; i < 10; i++) {
@@ -49,23 +39,25 @@ const handler = (payload, res) => {
             }
         }
         console.log('text ',text)
-        console.log(3)
-        let res = {
-            title: `🌯 leaderboard`,
-            color: '#2FA44F',
-            text: text,
-            mrkdwn_in: ['text']
-        }
-        return Promise.resolve(res)
+        let msg = _.defaults({
+            channel: payload.channel_name,
+            attachments: {
+                title: `🌯 leaderboard`,
+                color: '#2FA44F',
+                text: text,
+                mrkdwn_in: ['text']
+            }
+        }, msgDefaults)
+        return Promise.resolve(msg)
     }
 
     const getLeaderboard = function() {
         getAttachments
             .then(getFormattedText)
-            .then(fulfilled => {
+            .then(msg => {
                 res.set('content-type', 'application/json')
-                res.status(200).json(fulfilled)
-                console.log('fulfilled ', fulfilled)
+                res.status(200).json(msg)
+                console.log('msg ', msg)
                 return
             })
     }
