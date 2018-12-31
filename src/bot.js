@@ -50,25 +50,27 @@ bot.message((msg) => {
         connection.connect()
         connection.query(allowanceCheckQuery, (err, rows, fields) => {
             if (err) throw err
+            console.log('rows[0].result')
+            console.log(rows[0].result)
             let result = rows[0].result
-            console.log(msg.user + ' daily allowance: ' + result)
-            if(result = 0) {
+            console.log(msg.user + ' daily allowance: ' + rows[0].result)
+            if(result != undefined && result == 0) {
                 connection.end()
                 return
             }
         })
 
-
-
         let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
         givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
-        let timestamp = new Date().getTime()
-        console.log('timestamp: ' + timestamp)
-        console.log('msg:::')
-        console.log(msg.text)
 
-        // TODO: add usernames and message context to insert query
-        // TODO: fix timestamp
+        if(msg.user == givenTo) {
+            console.log('trying to give burrito to self')
+            // TODO: send message and return
+        }
+
+        let timestamp = new Date().getTime()
+
+        // TODO: add usernames to insert query
         let masterInsertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username,` +
                 ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
                 ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msg.text}', '${timestamp}');`
