@@ -18,11 +18,41 @@ const handler = (payload, res) => {
     // Query for top 10 # of burritos by user ID
     let msg = _.defaults({
         channel: payload.channel_name,
-        attachments: getAttachments()
+        attachments: function() {
+            console.log('getAttachments')
+            let leaderboardQuery = `SELECT user_id, total_burritos FROM burritos_by_user` +
+            ` WHERE total_burritos > 0 ORDER BY total_burritos DESC, user_id DESC LIMIT 10;`
+            console.log('leaderboardQuery: '+leaderboardQuery)
+            connection.query(leaderboardQuery, (err, rows, fields) => {
+                // TODO: send error message
+                if (err) throw err
+                console.log('rows ', rows)
+                return {
+                    title: `🌯 leaderboard`,
+                    color: '#2FA44F',
+                    text: function(rows) {
+                        console.log('getText')
+                        console.log('getText for ', rows)
+                        let text = ''
+                        let i = 0;
+                        for(let i = 0; i < 10; i++) {
+                            if(typeof rows[i] !== 'undefined') {
+                                let row = rows[i]
+                                console.log('row ', row)
+                                text += `#${i + 1}: <@${row.user_id}> - ${row.total_burritos}\n`
+                            }
+                        }
+                        console.log('text ',text)
+                        return text
+                    },
+                    mrkdwn_in: ['text']
+                }
+            })
+        }
     }, msgDefaults)
 
     console.log('after msg')
-
+/*
     function getAttachments() {
         console.log('getAttachments')
         let leaderboardQuery = `SELECT user_id, total_burritos FROM burritos_by_user` +
@@ -61,7 +91,7 @@ const handler = (payload, res) => {
     }
 
     console.log('after getText declared')
-
+*/
     res.set('content-type', 'application/json')
     res.status(200).json(msg)
     console.log('msg ', msg)
