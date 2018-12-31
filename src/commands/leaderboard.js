@@ -25,15 +25,14 @@ const handler = (payload, res) => {
                 if (err) reject(err)
                 console.log('rows ', rows)
                 console.log(1)
-                let formattedText = getFormattedText
-                console.log(4)
-                let res = {
-                    title: `🌯 leaderboard`,
-                    color: '#2FA44F',
-                    text: formattedText,
-                    mrkdwn_in: ['text']
-                }
-                resolve(res)
+                // let formattedText = getFormattedText
+                // let res = {
+                //     title: `🌯 leaderboard`,
+                //     color: '#2FA44F',
+                //     text: formattedText,
+                //     mrkdwn_in: ['text']
+                // }
+                resolve(rows)
             })
         }
     )
@@ -51,7 +50,13 @@ const handler = (payload, res) => {
         }
         console.log('text ',text)
         console.log(3)
-        return Promise.resolve(text)
+        let res = {
+            title: `🌯 leaderboard`,
+            color: '#2FA44F',
+            text: text,
+            mrkdwn_in: ['text']
+        }
+        return Promise.resolve(res)
     }
 
     const getLeaderboard = function() {
