@@ -37,7 +37,12 @@ const handler = (payload, res) => {
     )
 
     const func = function() {
-        getAttachments.then(res => console.log('res',res))
+        getAttachments.then(fulfilled => {
+            res.set('content-type', 'application/json')
+            res.status(200).json(fulfilled)
+            console.log('fulfilled ', fulfilled)
+            return
+        })
     }
 
     func();
