@@ -80,10 +80,9 @@ bot.message((msg) => {
                         if(dailyAllowance > 0) {
                             resolve(dailyAllowance)
                         }
-                        console.log('Not enough allowance')
-                        reject('Not enough allowance')
+                        reject('You can only give 5 burritos a day')
                     } else {
-                        reject('Rows undefined')
+                        reject('Database error - burrito not given')
                     }
                 })
             }
@@ -182,7 +181,21 @@ bot.message((msg) => {
                     })
                     return
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                    slack.chat.postMessage({
+                    response_type: 'ephemeral',
+                    token: config('SLACK_TOKEN'),
+                    icon_emoji: config('ICON_EMOJI'),
+                    channel: msg.channel,
+                    username: 'Yo Burrito',
+                    text: error
+                }, (err, data) => {
+                    if (err) throw err
+                    let txt = _.truncate(data.message.text)
+                    console.log(`🤖🌯  I said: "${txt}"`)
+                })
+                return
+            })
         }
 
         giveBurrito()
