@@ -81,6 +81,9 @@ bot.message((msg) => {
                             console.log('not enough allowance')
                             reject('Not enough allowance')
                         }
+                        resolve()
+                    } else {
+                        reject('Rows undefined')
                     }
                 })
             }
