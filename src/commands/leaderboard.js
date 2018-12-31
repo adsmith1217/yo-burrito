@@ -92,11 +92,14 @@ const handler = (payload, res) => {
     console.log('after getText declared')
 */
 
-    res.set('content-type', 'application/json')
-    res.status(200).json(msg)
-    console.log('msg ', msg)
-    console.log('msg.attachments ', msg.attachments)
-    return
+    setTimeout(send, 5000)
+    function send() {
+        res.set('content-type', 'application/json')
+        res.status(200).json(msg)
+        console.log('msg ', msg)
+        console.log('msg.attachments ', msg.attachments)
+        return
+    }
 }
 
 module.exports = { pattern: /leaderboard/ig, handler: handler }
