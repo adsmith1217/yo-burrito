@@ -26,9 +26,9 @@ bot.message((msg) => {
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
             username: 'Yo Burrito',
-            text: `Hi, ${msg.user}! :wave:\n
-                    I\'m yo_burrito, hey_taco\'s thrifty cousin\n
-                    Not sure what to do? Try \`/burrito\` for help`
+            text: `Hi, ${msg.user}! :wave:\n` +
+                    `I\'m yo_burrito, hey_taco\'s thrifty cousin\n` +
+                    `Not sure what to do? Try \`/burrito\` for help`
         }, (err, data) => {
             if (err) throw err
 
@@ -76,7 +76,8 @@ bot.message((msg) => {
                 console.log('made it through check')
                 let result = rows[0].result
                 console.log(msg.user + ' daily allowance: ' + result)
-                if(result == 0) {
+                if(result === 0) {
+                    console.log('not enough allowance')
                     return
                 }
             }
@@ -97,10 +98,10 @@ bot.message((msg) => {
                 ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
                 ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msg.text}', '${timestamp}');`
         let givenToUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
-                ` VALUES ('${givenTo}', 1, 5, ${timestamp}) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + 1;`
+                ` VALUES ('${givenTo}', 1, 5, NULL) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + 1;`
         let allowanceUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
-                ` VALUES ('${msg.user}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - 1;`
-
+                ` VALUES ('${msg.user}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - 1` +
+                ` last_activity = ${timestamp};`
         console.log('masterInsertQuery', masterInsertQuery)
         console.log('givenToUpdateQuery', givenToUpdateQuery)
         console.log('allowanceUpdateQuery', allowanceUpdateQuery)
