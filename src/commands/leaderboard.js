@@ -30,7 +30,7 @@ const handler = (payload, res) => {
 
     const getFormattedText = function(rows) {
         console.log('getText for ', rows)
-        let text = '🌯 Leaderboard\n'
+        let text = ''
         for(let i = 0; i < 10; i++) {
             if(typeof rows[i] !== 'undefined') {
                 let row = rows[i]
@@ -39,12 +39,17 @@ const handler = (payload, res) => {
             }
         }
         console.log('text ',text)
-        let msg = {
-            title: `🌯 Leaderboard`,
-            color: '#2FA44F',
-            text: text,
-            mrkdwn_in: ['text']
-        }
+        let msg = _.defaults({
+                channel: payload.channel_name,
+                attachments: [
+                    {
+                        title: `🌯 Leaderboard`,
+                        color: '#2FA44F',
+                        text: text,
+                        mrkdwn_in: ['text']
+                    }
+                ]
+            }, msgDefaults)
         return Promise.resolve(msg)
     }
 
