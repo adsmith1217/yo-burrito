@@ -35,27 +35,26 @@ const handler = (payload, res) => {
             // TODO: send error message
             if (err) throw err
             console.log('rows ', rows)
-            let results = rows.results
-            console.log(payload.user_id, ' has this many burritos: ', results)
             return {
                 title: `🌯 leaderboard`,
                 color: '#2FA44F',
-                text: getText(results),
+                text: getText(rows),
                 mrkdwn_in: ['text']
             }
         })
     }
 
     // Process results into message text
-    function getText(results) {
-        console.log('getText for ', results)
+    function getText(rows) {
+        console.log('getText for ', rows)
         let text = ''
         let i = 1;
-        for(let item in results) {
-            console.log('item ', item)
-            text += `#${i} ${item.user_id} ${item.total_burritos}\n`
+        for(let row in rows) {
+            console.log('row ', row)
+            text += `#${i} ${row.user_id} ${row.total_burritos}\n`
             i++
         }
+        console.log('text ',text)
         return text
     }
 
