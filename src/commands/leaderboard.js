@@ -48,10 +48,10 @@ const handler = (payload, res) => {
     function getText(rows) {
         console.log('getText for ', rows)
         let text = ''
-        let i = 1;
+        let i = 0;
         for(let row in rows) {
             console.log('row ', row[i])
-            text += `#${i} <@${row[i].user_id}> ${row[i].total_burritos}\n`
+            text += `#${i++} <@${row[i].user_id}> ${row[i].total_burritos}\n`
             i++
         }
         console.log('text ',text)
