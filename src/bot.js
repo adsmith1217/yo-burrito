@@ -69,14 +69,15 @@ bot.message((msg) => {
                 console.log('allowanceCheckQuery', allowanceCheckQuery)
                 connection.query(allowanceCheckQuery, (err, rows, fields) => {
                     if (err) throw err
+                    let dailyAllowance = 4
                     if(typeof rows[0] !== 'undefined') {
-                        let dailyAllowance = rows[0].daily_allowance
+                        dailyAllowance = rows[0].daily_allowance
                         if(dailyAllowance > 0) {
                             resolve(dailyAllowance)
                         }
                         reject('You can only give 5 burritos a day')
                     } else {
-                        reject('Database error - burrito not given')
+                        resolve(dailyAllowance)
                     }
                 })
             }
