@@ -12,17 +12,6 @@ const msgDefaults = {
     icon_emoji: config('ICON_EMOJI')
 }
 
-// let attachments = [
-//     {
-//         title: '🌯 leaderboard',
-//         color: '#2FA44F',
-//         text: '#1: First Last - ##\n' +
-//                 '#2: First Last - ##\n' +
-//                 '...\n',
-//         mrkdwn_in: ['text']
-//     }
-// ]
-
 const handler = (payload, res) => {
     console.log('leaderboard command')
 
@@ -64,7 +53,7 @@ const handler = (payload, res) => {
             if(typeof rows[i] !== 'undefined') {
                 let row = rows[i]
                 console.log('row ', row)
-                text += `#${i + 1} <@${row.user_id}> ${row.total_burritos}\n`
+                text += `#${i + 1}: <@${row.user_id}> - ${row.total_burritos}\n`
             }
         }
         console.log('text ',text)
@@ -75,7 +64,8 @@ const handler = (payload, res) => {
 
     res.set('content-type', 'application/json')
     res.status(200).json(msg)
-    console.log(msg)
+    console.log('msg ', msg)
+    console.log('msg.attachments ', msg.attachments)
     return
 }
 
