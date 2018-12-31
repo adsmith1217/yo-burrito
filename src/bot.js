@@ -50,9 +50,10 @@ bot.message((msg) => {
         // connection.connect()
         connection.query(allowanceCheckQuery, (err, rows, fields) => {
             if (err) throw err
-            console.log('rows[0].result undefined check')
+            console.log('rows[0] undefined check')
+            console.log(rows)
             console.log(rows[0])
-            if(typeof rows[0].result !== 'undefined') {
+            if(typeof rows[0] !== 'undefined') {
                 console.log('made it through check')
                 let result = rows[0].result
                 console.log(msg.user + ' daily allowance: ' + result)
