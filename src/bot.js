@@ -46,32 +46,36 @@ bot.message((msg) => {
         // Check if the generous burrito gifter can give a burrito
         let allowanceCheckQuery = `SELECT daily_allowance AS result FROM burritos_by_user
                 WHERE user_id = '${msg.user}'`
+        console.log('allowanceCheckQuery', allowanceCheckQuery)
         connection.connect()
         connection.query(allowanceCheckQuery, (err, rows, fields) => {
             if (err) throw err
             let result = rows[0].result
             console.log(msg.user + ' daily allowance: ' + result)
-            if(result = 0) return
+            if(result = 0) {
+                connection.end()
+                return
+            }
         })
-        connection.end()
 
 
 
         let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
         givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
-        // let timestamp = + new Date()
         let timestamp = new Date().getTime()
         console.log('timestamp: ' + timestamp)
+        console.log('msg:::')
+        console.log(msg.text)
 
         // TODO: add usernames and message context to insert query
         // TODO: fix timestamp
-        let masterInsertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username,
-                given_to_username, given_by_id, given_to_id, message, timestamp)` +
-                ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', NULL, '${timestamp}');`
+        let masterInsertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username,` +
+                ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
+                ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msg.text}', '${timestamp}');`
         let givenToUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
                 ` VALUES ('${givenTo}', 1, 5, ${timestamp}) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + 1;`
         let allowanceUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
-                ` VALUES ('${msg.given}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - 1;`
+                ` VALUES ('${msg.user}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - 1;`
 
         console.log('masterInsertQuery', masterInsertQuery)
         console.log('givenToUpdateQuery', givenToUpdateQuery)
@@ -90,9 +94,10 @@ bot.message((msg) => {
             if (err) throw err
             console.log('Updated burritos_by_user allowance: ', rows[0])
         })
-        // connection.end()
+        connection.end()
 
         // TODO: error handling and confirmation based on SQL result
+        console.log('prepare message')
         slack.chat.postMessage({
             response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
@@ -110,13 +115,16 @@ bot.message((msg) => {
                     username: 'Yo Burrito',
                     text: `There was an error sending your burrito to <@${givenTo}> :(`
                 })
+                console.log('send message')
                 throw err
             }
+            console.log('after message')
 
             let txt = _.truncate(data.message.text)
 
             console.log(`🤖🌯  I said: "${txt}"`)
         })
+        console.log('before return')
         return
     }
 
