@@ -26,8 +26,6 @@ app.get('/', (req, res) => { res.send('\n 👋🌍🌯 yo_burrito is running \n'
 
 app.post('/commands/burrito', (req, res) => {
     let payload = req.body
-    console.log('index req.body')
-    console.log(req.body)
 
     if (!payload || payload.token !== config('BURRITO_COMMAND_TOKEN')) {
         let err = '✋  Burri—what? An invalid slash token was provided\n' +

@@ -71,7 +71,6 @@ bot.message((msg) => {
                     if (err) throw err
                     if(typeof rows[0] !== 'undefined') {
                         let dailyAllowance = rows[0].daily_allowance
-                        console.log(msg.user + ' daily allowance: ' + dailyAllowance)
                         if(dailyAllowance > 0) {
                             resolve(dailyAllowance)
                         }
@@ -91,7 +90,7 @@ bot.message((msg) => {
 
                     // Prevent self gifting
                     if(msg.user === givenTo) {
-                        console.log('trying to give burrito to self')
+                        console.log('Trying to give burrito to self')
                         slack.chat.postMessage({
                             response_type: 'ephemeral',
                             token: config('SLACK_TOKEN'),
@@ -141,7 +140,7 @@ bot.message((msg) => {
                         icon_emoji: config('ICON_EMOJI'),
                         channel: msg.user,
                         username: 'Yo Burrito',
-                        text: `Giving a burrito to <@${givenTo}>, you have ${dailyAllowance - 1} burritos left to give today`
+                        text: `Gave a burrito to <@${givenTo}>, you have ${dailyAllowance - 1} burritos left to give today`
                     }, (err, data) => {
                         if (err) {
                             slack.chat.postMessage({
