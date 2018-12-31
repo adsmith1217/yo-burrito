@@ -68,10 +68,11 @@ bot.message((msg) => {
         let masterInsertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username,
                 given_to_username, given_by_id, given_to_id, message, timestamp)` +
                 ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', NULL, '${timestamp}');`
-        let givenToUpdateQuery = `UPDATE burritos_by_user SET total_burritos = total_burritos + 1` +
-                ` WHERE user_id = '${givenTo}';`
-        let allowanceUpdateQuery = `UPDATE burritos_by_user SET daily_allowance = daily_allowance - 1` +
-        ` WHERE user_id = '${msg.given}';`
+        let givenToUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
+                ` VALUES ('${givenTo}', 1, 5, ${timestamp}) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + 1;`
+        let allowanceUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
+                ` VALUES ('${msg.given}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - 1;`
+
         console.log('masterInsertQuery', masterInsertQuery)
         console.log('givenToUpdateQuery', givenToUpdateQuery)
         console.log('allowanceUpdateQuery', allowanceUpdateQuery)
@@ -89,7 +90,7 @@ bot.message((msg) => {
             if (err) throw err
             console.log('Updated burritos_by_user allowance: ', rows[0])
         })
-        connection.end()
+        // connection.end()
 
         // TODO: error handling and confirmation based on SQL result
         slack.chat.postMessage({
