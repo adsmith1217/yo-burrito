@@ -49,10 +49,12 @@ const handler = (payload, res) => {
         console.log('getText for ', rows)
         let text = ''
         let i = 0;
-        for(let row in rows) {
-            console.log('row ', row[i])
-            text += `#${i++} <@${row[i].user_id}> ${row[i].total_burritos}\n`
-            i++
+        for(let i = 0; i < 10; i++) {
+            if(typeof row[i] !== 'undefined') {
+                let row = rows[i]
+                console.log('row ', row)
+                text += `#${i++} <@${row.user_id}> ${row.total_burritos}\n`
+            }
         }
         console.log('text ',text)
         return text
