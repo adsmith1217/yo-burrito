@@ -36,7 +36,11 @@ const handler = (payload, res) => {
         }
     )
 
-    getAttachments().then(console.log(2))
+    const func = function() {
+        getAttachments.then(res => console.log('res',res))
+    }
+
+    func();
 
 
 /*
