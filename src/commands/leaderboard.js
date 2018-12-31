@@ -7,7 +7,7 @@ const mysql = require('mysql');
 const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL);
 
 const msgDefaults = {
-    response_type: 'in_channel',
+    response_type: 'ephemeral',
     username: 'Yo Burrito',
     icon_emoji: config('ICON_EMOJI')
 }
