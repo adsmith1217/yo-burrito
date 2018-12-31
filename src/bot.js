@@ -76,7 +76,7 @@ bot.message((msg) => {
                 console.log('made it through check')
                 let result = rows[0].result
                 console.log(msg.user + ' daily allowance: ' + result)
-                if(result === 0) {
+                if(result <= 0) {
                     console.log('not enough allowance')
                     return
                 }

@@ -5,6 +5,8 @@
 const _ = require('lodash')
 const config = require('../config')
 const Botkit = require('botkit')
+const mysql = require('mysql');
+const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL);
 
 var controller = Botkit.slackbot({})
 var bot = controller.spawn()
@@ -18,6 +20,16 @@ const msgDefaults = {
 }
 
 console.log('daily reset scheduled job')
+
+let dailyResetQuery = `UPDATE burritos_by_user SET daily_allowance = 5;`
+console.log('dailyResetQuery', dailyResetQuery)
+
+connection.query(dailyResetQuery, (err, rows, fields) => {
+    if (err) throw err
+    console.log('Added to burritos_master')
+})
+
+return
 
 /*
 trending('javascript', (err, repos) => {
