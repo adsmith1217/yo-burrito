@@ -27,18 +27,16 @@ const handler = (payload, res) => {
     console.log('leaderboard command')
 
     function getAttachments() {
-        let leaderboardQuery = `SELECT user_id, total_burritos AS results FROM burritos_by_user
-        WHERE total_burritos > 0 LIMIT 10 ORDER BY total_burritos DESC, user_id DESC`
+        let leaderboardQuery = `SELECT user_id, total_burritos AS results FROM burritos_by_user` +
+        ` WHERE total_burritos > 0 LIMIT 10 ORDER BY total_burritos DESC, user_id DESC;`
         console.log('leaderboardQuery: '+leaderboardQuery)
 
-        connection.connect()
         connection.query(leaderboardQuery, (err, rows, fields) => {
             // TODO: send error message
             if (err) throw err
             let results = rows[0].results
             console.log(payload.user_id, ' has this many burritos: ', result)
         })
-        connection.end()
 
         return {
             title: `🌯 leaderboard`,

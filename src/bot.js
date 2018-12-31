@@ -19,6 +19,26 @@ bot.message((msg) => {
     // Has /🌯: don't do anything
     if (_.includes(msg.text, '/burrito')) return
 
+    //@yo_burrito says hey
+    if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`)) {
+        slack.chat.postMessage({
+            token: config('SLACK_TOKEN'),
+            icon_emoji: config('ICON_EMOJI'),
+            channel: msg.channel,
+            username: 'Yo Burrito',
+            text: `Hi, ${msg.user}! :wave:\n
+                    I\'m yo_burrito, hey_taco\'s thrifty cousin\n
+                    Not sure what to do? Try \`/burrito\` for help`
+        }, (err, data) => {
+            if (err) throw err
+
+            let txt = _.truncate(data.message.text)
+
+            console.log(`🤖🌯 I said: "${txt}"`)
+        })
+        return
+    }
+
     // 🚫🌯 no burrito: don't do anything
     if (!_.includes(msg.text, ':burrito:')) return
 
@@ -44,10 +64,9 @@ bot.message((msg) => {
     if(_.includes(msg.text, ':burrito:')) {
 
         // Check if the generous burrito gifter can give a burrito
-        let allowanceCheckQuery = `SELECT daily_allowance AS result FROM burritos_by_user
-                WHERE user_id = '${msg.user}'`
+        let allowanceCheckQuery = `SELECT daily_allowance AS result FROM burritos_by_user` +
+                ` WHERE user_id = '${msg.user}';`
         console.log('allowanceCheckQuery', allowanceCheckQuery)
-        // connection.connect()
         connection.query(allowanceCheckQuery, (err, rows, fields) => {
             if (err) throw err
             console.log('rows[0] undefined check')
@@ -58,7 +77,6 @@ bot.message((msg) => {
                 let result = rows[0].result
                 console.log(msg.user + ' daily allowance: ' + result)
                 if(result == 0) {
-                    // connection.end()
                     return
                 }
             }
@@ -99,7 +117,6 @@ bot.message((msg) => {
             if (err) throw err
             console.log('Updated burritos_by_user allowance')
         })
-        // connection.end()
 
         // TODO: error handling and confirmation based on SQL result
         console.log('prepare message')
@@ -129,26 +146,6 @@ bot.message((msg) => {
             console.log(`🤖🌯  I said: "${txt}"`)
         })
         console.log('before return')
-        return
-    }
-
-    //@yo_burrito says hey
-    if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`)) {
-        slack.chat.postMessage({
-            token: config('SLACK_TOKEN'),
-            icon_emoji: config('ICON_EMOJI'),
-            channel: msg.channel,
-            username: 'Yo Burrito',
-            text: `Hi, ${msg.user}! :wave:\n
-                    I\'m yo_burrito, hey_taco\'s thrifty cousin\n
-                    Not sure what to do? Try \`/burrito\` for help`
-        }, (err, data) => {
-            if (err) throw err
-
-            let txt = _.truncate(data.message.text)
-
-            console.log(`🤖🌯  I said: "${txt}"`)
-        })
         return
     }
 
