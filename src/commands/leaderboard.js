@@ -51,16 +51,18 @@ const handler = (payload, res) => {
         }
         console.log('text ',text)
         console.log(3)
-        return text
+        return Promise.resolve(text)
     }
 
     const getLeaderboard = function() {
-        getAttachments.then(fulfilled => {
-            res.set('content-type', 'application/json')
-            res.status(200).json(fulfilled)
-            console.log('fulfilled ', fulfilled)
-            return
-        })
+        getAttachments
+            .then(getFormattedText)
+            .then(fulfilled => {
+                res.set('content-type', 'application/json')
+                res.status(200).json(fulfilled)
+                console.log('fulfilled ', fulfilled)
+                return
+            })
     }
 
     getLeaderboard();
