@@ -66,49 +66,49 @@ bot.message((msg) => {
                 ` WHERE user_id = '${msg.user}' LIMIT 1;`
         console.log('allowanceCheckQuery', allowanceCheckQuery)
 
-        // const getAllowance = new Promise(
-        //     (resolve, reject) => {
-        //         connection.query(allowanceCheckQuery, (err, rows, fields) => {
-        //             if (err) throw err
-        //             console.log('rows[0] undefined check')
-        //             console.log(rows)
-        //             console.log(rows[0])
-        //             if(typeof rows[0] !== 'undefined') {
-        //                 console.log('made it through check')
-        //                 let dailyAllowance = rows[0].daily_allowance
-        //                 console.log(msg.user + ' daily allowance: ' + dailyAllowance)
-        //                 if(dailyAllowance > 0) {
-        //                     resolve(dailyAllowance)
-        //                 }
-        //                 console.log('not enough allowance')
-        //                 reject('Not enough allowance')
-        //             } else {
-        //                 reject('Rows undefined')
-        //             }
-        //         })
-        //     }
-        // )
-
-
-        connection.query(allowanceCheckQuery, (err, rows, fields) => {
-            if (err) throw err
-            console.log('rows[0] undefined check')
-            console.log(rows)
-            console.log(rows[0])
-            if(typeof rows[0] !== 'undefined') {
-                console.log('made it through check')
-                let dailyAllowance = rows[0].daily_allowance
-                console.log(msg.user + ' daily allowance: ' + dailyAllowance)
-                if(dailyAllowance <= 0) {
-                    console.log('not enough allowance')
-                    return
-                }
+        const getAllowance = new Promise(
+            (resolve, reject) => {
+                connection.query(allowanceCheckQuery, (err, rows, fields) => {
+                    if (err) throw err
+                    console.log('rows[0] undefined check')
+                    console.log(rows)
+                    console.log(rows[0])
+                    if(typeof rows[0] !== 'undefined') {
+                        console.log('made it through check')
+                        let dailyAllowance = rows[0].daily_allowance
+                        console.log(msg.user + ' daily allowance: ' + dailyAllowance)
+                        if(dailyAllowance > 0) {
+                            resolve(dailyAllowance)
+                        }
+                        console.log('Not enough allowance')
+                        reject('Not enough allowance')
+                    } else {
+                        reject('Rows undefined')
+                    }
+                })
             }
-        })
+        )
 
-        // const giveBurrito = function() {
-        //     getAllowance
-        //         .then(res => {
+
+        // connection.query(allowanceCheckQuery, (err, rows, fields) => {
+        //     if (err) throw err
+        //     console.log('rows[0] undefined check')
+        //     console.log(rows)
+        //     console.log(rows[0])
+        //     if(typeof rows[0] !== 'undefined') {
+        //         console.log('made it through check')
+        //         let dailyAllowance = rows[0].daily_allowance
+        //         console.log(msg.user + ' daily allowance: ' + dailyAllowance)
+        //         if(dailyAllowance <= 0) {
+        //             console.log('not enough allowance')
+        //             return
+        //         }
+        //     }
+        // })
+
+        const giveBurrito = function() {
+            getAllowance
+                .then(res => {
                     let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
                     givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
 
@@ -116,6 +116,7 @@ bot.message((msg) => {
                     if(msg.user === givenTo) {
                         console.log('trying to give burrito to self')
                         slack.chat.postMessage({
+                            response_type: 'ephemeral',
                             token: config('SLACK_TOKEN'),
                             icon_emoji: config('ICON_EMOJI'),
                             channel: msg.channel,
@@ -180,11 +181,11 @@ bot.message((msg) => {
                         console.log(`🤖🌯  I said: "${txt}"`)
                     })
                     return
-        //     })
-        //     .catch(error => console.log(error))
-        // }
+            })
+            .catch(error => console.log(error))
+        }
 
-        // giveBurrito()
+        giveBurrito()
     }
 
 })
