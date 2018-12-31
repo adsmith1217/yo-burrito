@@ -60,18 +60,18 @@ bot.message((msg) => {
         let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
         givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
         // let timestamp = + new Date()
-        let timestamp = new Date()
+        let timestamp = new Date().getTime()
         console.log('timestamp: ' + timestamp)
 
         // TODO: add usernames and message context to insert query
         // TODO: fix timestamp
         let masterInsertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username,
                 given_to_username, given_by_id, given_to_id, message, timestamp)` +
-                `VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', NULL, '${timestamp}');`
+                ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', NULL, '${timestamp}');`
         let givenToUpdateQuery = `UPDATE burritos_by_user SET total_burritos = total_burritos + 1` +
-                `WHERE user_id = '${givenTo}';`
+                ` WHERE user_id = '${givenTo}';`
         let allowanceUpdateQuery = `UPDATE burritos_by_user SET daily_allowance = daily_allowance - 1` +
-        `WHERE user_id = '${msg.given}';`
+        ` WHERE user_id = '${msg.given}';`
         console.log('masterInsertQuery', masterInsertQuery)
         console.log('givenToUpdateQuery', givenToUpdateQuery)
         console.log('allowanceUpdateQuery', allowanceUpdateQuery)
