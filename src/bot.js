@@ -47,7 +47,7 @@ bot.message((msg) => {
         let allowanceCheckQuery = `SELECT daily_allowance AS result FROM burritos_by_user
                 WHERE user_id = '${msg.user}'`
         console.log('allowanceCheckQuery', allowanceCheckQuery)
-        connection.connect()
+        // connection.connect()
         connection.query(allowanceCheckQuery, (err, rows, fields) => {
             if (err) throw err
             console.log('rows[0].result')
@@ -55,7 +55,7 @@ bot.message((msg) => {
             let result = rows[0].result
             console.log(msg.user + ' daily allowance: ' + rows[0].result)
             if(result != undefined && result == 0) {
-                connection.end()
+                // connection.end()
                 return
             }
         })
@@ -85,17 +85,17 @@ bot.message((msg) => {
 
         connection.query(masterInsertQuery, (err, rows, fields) => {
             if (err) throw err
-            console.log('Added to burritos_master: ', rows[0])
+            console.log('Added to burritos_master')
         })
         connection.query(givenToUpdateQuery, (err, rows, fields) => {
             if (err) throw err
-            console.log('Updated burritos_by_user given_to: ', rows[0])
+            console.log('Updated burritos_by_user given_to')
         })
         connection.query(allowanceUpdateQuery, (err, rows, fields) => {
             if (err) throw err
-            console.log('Updated burritos_by_user allowance: ', rows[0])
+            console.log('Updated burritos_by_user allowance')
         })
-        connection.end()
+        // connection.end()
 
         // TODO: error handling and confirmation based on SQL result
         console.log('prepare message')
@@ -116,7 +116,6 @@ bot.message((msg) => {
                     username: 'Yo Burrito',
                     text: `There was an error sending your burrito to <@${givenTo}> :(`
                 })
-                console.log('send message')
                 throw err
             }
             console.log('after message')
