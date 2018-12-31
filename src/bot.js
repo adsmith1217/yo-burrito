@@ -69,7 +69,7 @@ bot.message((msg) => {
                 console.log('allowanceCheckQuery', allowanceCheckQuery)
                 connection.query(allowanceCheckQuery, (err, rows, fields) => {
                     if (err) throw err
-                    let dailyAllowance = 4
+                    let dailyAllowance = 5
                     if(typeof rows[0] !== 'undefined') {
                         dailyAllowance = rows[0].daily_allowance
                         if(dailyAllowance > 0) {
