@@ -16,10 +16,13 @@ bot.started((payload) => {
 bot.message((msg) => {
     console.log(`🤖🌯  Incoming message: "${msg.text}"`)
 
+    // Check for undefined
+    if(msg.text === 'undefined' ) return
+
     // Has /🌯: don't do anything
     if (_.includes(msg.text, '/burrito')) return
 
-    //@yo_burrito says hey
+    // @yo_burrito says hey
     if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`)) {
         slack.chat.postMessage({
             token: config('SLACK_TOKEN'),
