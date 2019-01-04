@@ -21,6 +21,8 @@ bot.message((msg) => {
     console.log(msg.text)
     console.log(`msg.message:`)
     console.log(msg.message)
+    console.log(`msg.text undefined check`)
+    console.log(msg.text === 'undefined')
     console.log(`msg.message.text undefined check`)
     console.log(msg.message.text === 'undefined')
 
