@@ -18,8 +18,8 @@ bot.message((msg) => {
     console.log(`full msg:`)
     console.log(msg)
 
-    // Check for undefined
-    if(msg.text == 'undefined') return
+    // Check for secondary thread message
+    if(msg.message !== 'undefined') return
 
     // Has /🌯: don't do anything
     if (_.includes(msg.text, '/burrito')) return
