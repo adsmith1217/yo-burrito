@@ -17,6 +17,7 @@ bot.message((msg) => {
     console.log(`🤖🌯  Incoming message: "${msg.text}"`)
     console.log(`full msg:`)
     console.log(msg)
+    console.log(msg.message)
 
     // Check for secondary thread message
     if(msg.message !== 'undefined') return
