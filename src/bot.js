@@ -15,9 +15,10 @@ bot.started((payload) => {
 
 bot.message((msg) => {
     console.log(`🤖🌯  Incoming message: "${msg.text}"`)
+    console.log(`full msg: ${msg}`)
 
     // Check for undefined
-    if(msg.text === 'undefined' ) return
+    if(_.includes(msg.text, 'undefined')) return
 
     // Has /🌯: don't do anything
     if (_.includes(msg.text, '/burrito')) return
