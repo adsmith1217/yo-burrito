@@ -15,9 +15,14 @@ bot.started((payload) => {
 
 bot.message((msg) => {
     console.log(`🤖🌯  Incoming message: "${msg.text}"`)
-    console.log(`full msg:`)
+    console.log(`msg:`)
     console.log(msg)
+    console.log(`msg.text:`)
+    console.log(msg.text)
+    console.log(`msg.message:`)
     console.log(msg.message)
+    console.log(`msg.message.text:`)
+    console.log(msg.message.text)
 
     // Check for secondary thread message
     // if(msg.message !== 'undefined') return
