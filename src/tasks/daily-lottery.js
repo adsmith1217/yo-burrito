@@ -34,7 +34,8 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
             title: `:burrito: Daily Lottery`,
             color: '#2FA44F',
             text: `Congratulations <@${user}> you have won the daily ` +
-                `burrito lottery! Don't spend it all in one place.\n`,
+                `burrito lottery! :burrito:\n` +
+                `Don't spend it all in one place.\n`,
             mrkdwn_in: ['text']
         }
     ];
