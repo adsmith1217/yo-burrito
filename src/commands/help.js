@@ -12,7 +12,7 @@ const msgDefaults = {
 
 let attachments = [
     {
-        title: 'Yo Burrito - because hey_taco was too expensive',
+        title: 'Yo Burrito - because Hey Taco was too expensive',
         color: '#2FA44F',
         text: 'Use @someone + Burrito Emoji to give a burrito\n' +
                 '`/burrito leaderboard` - top 10 burrito earners\n' +
