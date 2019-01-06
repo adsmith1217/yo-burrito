@@ -14,7 +14,7 @@ let attachments = [
     {
         title: 'Yo Burrito - because hey_taco was too expensive',
         color: '#2FA44F',
-        text: 'Use @someone + Burrito Emoji to give a burrito \n' +
+        text: 'Use @someone + Burrito Emoji to give a burrito\n' +
                 '`/burrito leaderboard` - top 10 burrito earners\n' +
                 '`/burrito mine` - your # of awarded burritos\n' +
                 '`/burrito help` ... you\'re lookin at it!\n' +
@@ -22,7 +22,7 @@ let attachments = [
                 'Want to bring Yo Burrito to your own channel?\n' +
                 'Use `/invite @yo_burrito`\n' +
                 ' \n' +
-                'Questions? Ask Adam Smith (amsmith@wmp.com)\n' +
+                'Questions? <@Adam Smith> (amsmith@wmp.com)\n' +
                 ' \n' +
                 'Repository: https://github.com/wmpcx/yo-burrito\n',
         mrkdwn_in: ['text']
