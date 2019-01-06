@@ -21,7 +21,7 @@ bot.message((msg) => {
     // Check for secondary thread message
     if(msg.message) return
 
-    // Has /🌯: don't do anything
+    // Has /🌯 command: don't do anything
     if (_.includes(msg.text, '/burrito')) return
 
     // @yo_burrito says hey
@@ -48,7 +48,7 @@ bot.message((msg) => {
     if (!_.includes(msg.text, ':burrito:')) return
 
     // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
-    if (!_.includes(msg.text, /<@([A-Z 0-9])+>/igm)) {
+    if (!_.includes(msg.text, /<@[A-Z 0-9]+>/igm)) {
         slack.chat.postMessage({
             response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
@@ -65,7 +65,7 @@ bot.message((msg) => {
     }
 
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
-    if(_.includes(msg.text, ':burrito:') && _.includes(msg.text, /<@([A-Z 0-9])+>/igm)) {
+    if(_.includes(msg.text, ':burrito:') && _.includes(msg.text, /<@[A-Z 0-9]+>/igm)) {
 
         // Get number of burritos
         let numOfBurritos = msg.text.count(':burrito:')
