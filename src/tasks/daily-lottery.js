@@ -28,11 +28,10 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
     if (err) throw err
     let user = rows[0].user_id
     console.log('winner: ',user)
-    user = 'U9V5W2R9B'
 
     var attachments = [
         {
-            title: `:burrito: Daily Lottery`,
+            title: `Daily Lottery`,
             color: '#2FA44F',
             text: `Congratulations <@${user}> you have won the daily ` +
                 `burrito lottery!\n` +
@@ -42,7 +41,7 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
     ];
 
     let msg = _.defaults({
-        channel: '#yo-burrito-testing',
+        channel: '#general',
         attachments: attachments
     }, msgDefaults)
 
@@ -54,8 +53,8 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
     // Update tables
     let timestamp = new Date().getTime()
     let masterInsertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username,` +
-        ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
-        ` VALUES (NULL, NULL, NULL, 'yo_burrito', '${user}', 'daily-lottery', '${timestamp}');`
+            ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
+            ` VALUES (NULL, NULL, NULL, 'yo_burrito', '${user}', 'daily-lottery', '${timestamp}');`
     let givenToUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
             ` VALUES ('${user}', 1, 5, NULL) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + 1;`
     console.log('masterInsertQuery', masterInsertQuery)
@@ -67,7 +66,7 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
     })
     connection.query(givenToUpdateQuery, (err, rows, fields) => {
         if (err) throw err
-        console.log('Updated burritos_by_user given_to')
+        console.log('Updated burritos_by_user')
     })
 })
 
