@@ -17,23 +17,6 @@ bot.message((msg) => {
     console.log(`🤖🌯  Incoming message: "${msg.text}"`)
     console.log(`msg:`)
     console.log(msg)
-    console.log(`msg.text:`)
-    console.log(msg.text)
-    console.log(`msg.message:`)
-    console.log(msg.message)
-    console.log(`msg.text undefined check`)
-    console.log(msg.text === 'undefined')
-    console.log(`msg.message undefined check`)
-    console.log(msg.message == 'undefined')
-    console.log(msg.message === 'undefined')
-    console.log(msg.message != 'undefined')
-    console.log(msg.message !== 'undefined')
-    console.log(msg.message == undefined)
-    console.log(msg.message === undefined)
-    console.log(msg.message != undefined)
-    console.log(msg.message !== undefined)
-    if(msg.message) console.log('1')
-    if(!msg.message) console.log('2')
 
     // Check for secondary thread message
     if(msg.message) return

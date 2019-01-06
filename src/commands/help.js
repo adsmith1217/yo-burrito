@@ -17,7 +17,10 @@ let attachments = [
         text: 'Use @someone + Burrito Emoji to give a burrito \n' +
                 '`/burrito leaderboard` - top 10 burrito earners\n' +
                 '`/burrito mine` - your # of awarded burritos\n' +
-                '`/burrito help` ... you\'re lookin at it!\n',
+                '`/burrito help` ... you\'re lookin at it!\n' +
+                '\n' +
+                'Want to bring Yo Burrito to your own channel?\n' +
+                'Use `/invite @yo_burrito`\n',
         mrkdwn_in: ['text']
     }
 ]
