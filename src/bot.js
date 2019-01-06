@@ -148,14 +148,14 @@ bot.message((msg) => {
                         console.log('Updated burritos_by_user allowance')
                     })
 
-                    // TODO: error handling and confirmation based on SQL result
+                    // Send message to giver
                     slack.chat.postMessage({
                         response_type: 'ephemeral',
                         token: config('SLACK_TOKEN'),
                         icon_emoji: config('ICON_EMOJI'),
                         channel: msg.user,
                         username: 'Yo Burrito',
-                        text: `Gave a burrito to <@${givenTo}>, you have ${dailyAllowance - 1} burritos left to give today`
+                        text: `Gave ${numOfBurritos} burrito to <@${givenTo}>, you have ${dailyAllowance - numOfBurritos} burritos left to give today`
                     }, (err, data) => {
                         if (err) {
                             slack.chat.postMessage({
@@ -170,6 +170,18 @@ bot.message((msg) => {
                         }
                         let txt = _.truncate(data.message.text)
                         console.log(`🤖🌯  I said: "${txt}"`)
+                    })
+
+                    // Send message to receiver
+                    slack.chat.postMessage({
+                        response_type: 'ephemeral',
+                        token: config('SLACK_TOKEN'),
+                        icon_emoji: config('ICON_EMOJI'),
+                        channel: givenTo,
+                        username: 'Yo Burrito',
+                        text: `You received ${numOfBurritos} burrito from ${msg.user}!`
+                    }, (err, data) => {
+                        if (err) throw err
                     })
                     return
             })
