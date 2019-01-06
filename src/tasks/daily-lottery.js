@@ -5,7 +5,7 @@ console.log('daily lottery scheduled job')
 
 const Botkit = require('botkit')
 const mysql = require('mysql')
-const config = require('./config')
+const config = require('../config')
 const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
 
 var controller = Botkit.slackbot({})
