@@ -24,7 +24,11 @@ bot.message((msg) => {
     console.log(`msg.text undefined check`)
     console.log(msg.text === 'undefined')
     console.log(`msg.message undefined check`)
+    console.log(msg.message == 'undefined')
     console.log(msg.message === 'undefined')
+    console.log(msg.message != 'undefined')
+    console.log(msg.message !== 'undefined')
+    if(msg.message) console.log('1')
 
     // Check for secondary thread message
     // if(msg.message !== 'undefined') return
@@ -33,7 +37,7 @@ bot.message((msg) => {
     if (_.includes(msg.text, '/burrito')) return
 
     // @yo_burrito says hey
-    if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`)) {
+    if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`) && msg.user != this.self.id) {
         slack.chat.postMessage({
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
