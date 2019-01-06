@@ -49,6 +49,7 @@ bot.message((msg) => {
 
     // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
     if (!_.includes(msg.text, /<@[A-Z 0-9]+>/igm)) {
+        console.log('burrito w/o mention')
         slack.chat.postMessage({
             response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
