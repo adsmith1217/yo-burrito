@@ -18,17 +18,20 @@ bot.message((msg) => {
     console.log('msg:')
     console.log(msg)
 
+    if(_.includes(msg.text, /<@([A-Z 0-9])+>/igm)) console.log('1')
+
     // Prevent secondary thread message
-    if(msg.message) return
+    // if(msg.message) return
 
     // Check for a message sender
-    if(!msg.user) return
+    // if(!msg.user) return
 
     // Has /🌯 command: don't do anything
     if (_.includes(msg.text, '/burrito')) return
 
     // @yo_burrito says hey
-    if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`) && msg.user != this.self.id) {
+    if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`)) {
+    // if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`) && msg.user != this.self.id) {
         slack.chat.postMessage({
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
@@ -49,10 +52,9 @@ bot.message((msg) => {
     if (!_.includes(msg.text, ':burrito:')) return
 
     // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
-    // TODO: fix this
-    /*
     if (!_.includes(msg.text, /<@([A-Z 0-9])+>/igm) && _.includes(msg.text, /</igm)) {
         slack.chat.postMessage({
+            response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
@@ -65,10 +67,9 @@ bot.message((msg) => {
         })
         return
     }
-    */
 
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
-    if(_.includes(msg.text, ':burrito:') && _.includes(msg.text, /<@([A-Z 0-9])+>/igm)) {
+    if(_.includes(msg.text, ':burrito:')) {
 
         // Get number of burritos
         let text = msg.text
