@@ -18,9 +18,6 @@ bot.message((msg) => {
     console.log('msg:')
     console.log(msg)
 
-    if(_.includes(msg.text, /<@([A-Z0-9])+>/im)) console.log('1')
-    if(msg.text.match(/<@([A-Z0-9])+>/im)) console.log('2')
-
     // Prevent secondary thread message
     if(msg.message) return
 
@@ -70,10 +67,10 @@ bot.message((msg) => {
     }
 
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
-    if(_.includes(msg.text, ':burrito:')) {
+    if(_.includes(msg.text, ':burrito:') && msg.text.match(/<@([A-Z0-9])+>/im)) {
 
         // Get number of burritos
-        var numOfBurritos = (msg.text.match(/:burrito:/g) || []).length;
+        var numOfBurritos = (msg.text.match(/:burrito:/igm) || []).length;
         console.log('numOfBurritos:', numOfBurritos);
 
         // Check if the generous burrito gifter can give a burrito
@@ -87,10 +84,10 @@ bot.message((msg) => {
                     let dailyAllowance = 5
                     if(typeof rows[0] !== 'undefined') {
                         dailyAllowance = rows[0].daily_allowance
-                        if(dailyAllowance > 0) {
+                        if(dailyAllowance > numOfBurritos) {
                             resolve(dailyAllowance)
                         }
-                        reject('You can only give 5 burritos a day')
+                        reject(`You can only give 5 burritos a day - you tried to give ${numOfBurritos}, but only have ${dailyAllowance} remaining.`)
                     } else {
                         resolve(dailyAllowance)
                     }
@@ -128,18 +125,20 @@ bot.message((msg) => {
                             ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
                             ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msg.text}', '${timestamp}');`
                     let givenToUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
-                            ` VALUES ('${givenTo}', 1, 5, NULL) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + 1;`
+                            ` VALUES ('${givenTo}', 1, 5, NULL) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + ${numOfBurritos};`
                     let allowanceUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
-                            ` VALUES ('${msg.user}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - 1,` +
+                            ` VALUES ('${msg.user}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - ${numOfBurritos},` +
                             ` last_activity = ${timestamp};`
                     console.log('masterInsertQuery', masterInsertQuery)
                     console.log('givenToUpdateQuery', givenToUpdateQuery)
                     console.log('allowanceUpdateQuery', allowanceUpdateQuery)
 
-                    connection.query(masterInsertQuery, (err, rows, fields) => {
-                        if (err) throw err
-                        console.log('Added to burritos_master')
-                    })
+                    for(let i = 0; i < numOfBurritos; i++) {
+                        connection.query(masterInsertQuery, (err, rows, fields) => {
+                            if (err) throw err
+                            console.log('Added to burritos_master')
+                        })
+                    }
                     connection.query(givenToUpdateQuery, (err, rows, fields) => {
                         if (err) throw err
                         console.log('Updated burritos_by_user given_to')
