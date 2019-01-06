@@ -15,11 +15,14 @@ bot.started((payload) => {
 
 bot.message((msg) => {
     console.log(`🤖🌯  Incoming message: "${msg.text}"`)
-    console.log(`msg:`)
+    console.log('msg:')
     console.log(msg)
 
-    // Check for secondary thread message
+    // Prevent secondary thread message
     if(msg.message) return
+
+    // Check for a message sender
+    if(!msg.user) return
 
     // Has /🌯 command: don't do anything
     if (_.includes(msg.text, '/burrito')) return
@@ -36,9 +39,7 @@ bot.message((msg) => {
                     `Not sure what to do? Try \`/burrito\` for help`
         }, (err, data) => {
             if (err) throw err
-
             let txt = _.truncate(data.message.text)
-
             console.log(`🤖🌯  I said: "${txt}"`)
         })
         return
@@ -48,11 +49,8 @@ bot.message((msg) => {
     if (!_.includes(msg.text, ':burrito:')) return
 
     // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
-    /*
-    if (!_.includes(msg.text, /<@[A-Z 0-9]+>/igm)) {
-        console.log('burrito w/o mention')
+    if (!_.includes(msg.text, /<@([A-Z 0-9])+>/igm) && _.includes(msg.text, /</igm)) {
         slack.chat.postMessage({
-            response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
@@ -65,10 +63,9 @@ bot.message((msg) => {
         })
         return
     }
-    */
 
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
-    if(_.includes(msg.text, ':burrito:') && _.includes(msg.text, /<@([A-Z 0-9])+>/igm)) {
+    if(_.includes(msg.text, ':burrito:')) {
 
         // Get number of burritos
         let numOfBurritos = msg.text.count(':burrito:')
