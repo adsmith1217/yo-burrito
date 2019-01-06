@@ -84,7 +84,7 @@ bot.message((msg) => {
                     let dailyAllowance = 5
                     if(typeof rows[0] !== 'undefined') {
                         dailyAllowance = rows[0].daily_allowance
-                        if(dailyAllowance > numOfBurritos) {
+                        if(dailyAllowance >= numOfBurritos) {
                             resolve(dailyAllowance)
                         }
                         reject(`You can only give 5 burritos a day - you tried to give ${numOfBurritos}, but only have ${dailyAllowance} remaining.`)
