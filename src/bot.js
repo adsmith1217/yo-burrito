@@ -55,7 +55,7 @@ bot.message((msg) => {
             response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
-            channel: msg.channel,
+            channel: msg.user,
             username: 'Yo Burrito',
             text: 'Trying to send someone a burrito? Try mentioning them using @'
         }, (err, data) => {
@@ -102,6 +102,7 @@ bot.message((msg) => {
                     givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
 
                     // Prevent self gifting
+                    /*
                     if(msg.user === givenTo) {
                         console.log('Trying to give burrito to self')
                         slack.chat.postMessage({
@@ -118,6 +119,7 @@ bot.message((msg) => {
                         })
                         return
                     }
+                    */
 
                     // TODO: condense into one query and add usernames to insert query
                     let timestamp = new Date().getTime()
@@ -150,16 +152,14 @@ bot.message((msg) => {
 
                     // Send message to giver
                     slack.chat.postMessage({
-                        response_type: 'ephemeral',
                         token: config('SLACK_TOKEN'),
                         icon_emoji: config('ICON_EMOJI'),
                         channel: msg.user,
                         username: 'Yo Burrito',
-                        text: `Gave ${numOfBurritos} burrito to <@${givenTo}>, you have ${dailyAllowance - numOfBurritos} burritos left to give today`
+                        text: `Gave ${numOfBurritos} burrito(s) to <@${givenTo}>, you have ${dailyAllowance - numOfBurritos} burritos left to give today`
                     }, (err, data) => {
                         if (err) {
                             slack.chat.postMessage({
-                                response_type: 'ephemeral',
                                 token: config('SLACK_TOKEN'),
                                 icon_emoji: config('ICON_EMOJI'),
                                 channel: msg.user,
@@ -174,12 +174,11 @@ bot.message((msg) => {
 
                     // Send message to receiver
                     slack.chat.postMessage({
-                        response_type: 'ephemeral',
                         token: config('SLACK_TOKEN'),
                         icon_emoji: config('ICON_EMOJI'),
                         channel: givenTo,
                         username: 'Yo Burrito',
-                        text: `You received ${numOfBurritos} burrito from ${msg.user}!`
+                        text: `You received ${numOfBurritos} burrito(s) from ${msg.user}!`
                     }, (err, data) => {
                         if (err) throw err
                     })
