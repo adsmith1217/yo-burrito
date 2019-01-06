@@ -22,7 +22,7 @@ if (config('PROXY_URI')) {
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => { res.send('\n 👋🌍🌯 yo_burrito is running \n') })
+app.get('/', (req, res) => { res.send('\n 👋🌍🌯 Yo Burrito is running \n') })
 
 app.post('/commands/burrito', (req, res) => {
     let payload = req.body
@@ -45,10 +45,10 @@ app.post('/commands/burrito', (req, res) => {
 app.listen(config('PORT'), (err) => {
     if (err) throw err
 
-    console.log(`\n🚀  yo_burrito LIVES on PORT ${config('PORT')} 🚀`)
+    console.log(`\n🤖🌯  Yo Burrito LIVES on PORT ${config('PORT')}`)
 
     if (config('SLACK_TOKEN')) {
-        console.log(`🤖🌯  beep boop: @yo_burrito is real-time\n`)
+        console.log(`🤖🌯  Yo Burrito is real-time\n`)
         bot.listen({ token: config('SLACK_TOKEN') })
     }
 })

@@ -39,7 +39,7 @@ PORT=3000
 ```shell
 $ npm start
 
-🚀 yo_burrito LIVES on PORT 3000 🚀
+🤖🌯  Yo Burrito LIVES on PORT 3000
 ```
 
 Visit [localhost:3000](http://localhost:3000).

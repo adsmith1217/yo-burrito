@@ -32,7 +32,7 @@ bot.message((msg) => {
             channel: msg.channel,
             username: 'Yo Burrito',
             text: `Hi, <@${msg.user}>! :wave:\n` +
-                    `I\'m yo_burrito, hey_taco\'s thrifty cousin\n` +
+                    `I\'m Yo Burrito, Hey Taco\'s thrifty cousin\n` +
                     `Not sure what to do? Try \`/burrito\` for help`
         }, (err, data) => {
             if (err) throw err
