@@ -53,7 +53,7 @@ bot.message((msg) => {
     if (!_.includes(msg.text, ':burrito:')) return
 
     // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
-    if (!_.includes(msg.text, /<@([A-Z0-9])+>/im)) {
+    if (!msg.text.match(/<@([A-Z0-9])+>/im)) {
         slack.chat.postMessage({
             response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
