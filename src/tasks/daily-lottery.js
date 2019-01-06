@@ -3,6 +3,7 @@
 
 console.log('daily lottery scheduled job')
 
+const _ = require('lodash')
 const Botkit = require('botkit')
 const mysql = require('mysql')
 const config = require('../config')
