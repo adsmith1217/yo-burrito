@@ -28,11 +28,12 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
     if (err) throw err
     let user = rows[0].user_id
     console.log('winner: ',user)
+    user = 'U9V5W2R9B'
     var attachments = [
         {
             title: `:burrito: Daily Lottery`,
             color: '#2FA44F',
-            text: `Congratulations <${user}> you have won the daily ` +
+            text: `Congratulations <@${user}> you have won the daily ` +
                 `burrito lottery! Don't spend it all in one place.\n`,
             mrkdwn_in: ['text']
         }
