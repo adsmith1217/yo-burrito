@@ -78,7 +78,7 @@ bot.message((msg) => {
                 icon_emoji: config('ICON_EMOJI'),
                 channel: msg.user,
                 username: 'Yo Burrito',
-                text: `You can only send burritos to a single person at a time right now. Bug Adam if you want this feature`
+                text: `You can only send burritos to a single person at a time right now - bug Adam if you want this feature.`
             }, (err, data) => {
                 if (err) throw err
             })
