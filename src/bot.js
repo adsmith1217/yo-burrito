@@ -18,19 +18,20 @@ bot.message((msg) => {
     console.log('msg:')
     console.log(msg)
 
-    if(_.includes(msg.text, /<@([A-Z 0-9])+>/igm)) console.log('1')
+    if(_.includes(msg.text, /<@([A-Z0-9])+>/im)) console.log('1')
+    if(msg.text.match(/<@([A-Z0-9])+>/im)) console.log('2')
 
     // Prevent secondary thread message
-    // if(msg.message) return
+    if(msg.message) return
 
     // Check for a message sender
-    // if(!msg.user) return
+    if(!msg.user) return
 
     // Has /🌯 command: don't do anything
     if (_.includes(msg.text, '/burrito')) return
 
     // @yo_burrito says hey
-    if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`)) {
+    if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`) && msg.user != this.self.id) {
     // if(_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`) && msg.user != this.self.id) {
         slack.chat.postMessage({
             token: config('SLACK_TOKEN'),
@@ -52,7 +53,7 @@ bot.message((msg) => {
     if (!_.includes(msg.text, ':burrito:')) return
 
     // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
-    if (!_.includes(msg.text, /<@([A-Z 0-9])+>/igm) && _.includes(msg.text, /</igm)) {
+    if (!_.includes(msg.text, /<@([A-Z0-9])+>/im)) {
         slack.chat.postMessage({
             response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
@@ -72,9 +73,8 @@ bot.message((msg) => {
     if(_.includes(msg.text, ':burrito:')) {
 
         // Get number of burritos
-        let text = msg.text
-        let numOfBurritos = text.count(':burrito:')
-        console.log('numOfBurritos', numOfBurritos)
+        var numOfBurritos = (msg.text.match(/:burrito:/g) || []).length;
+        console.log('numOfBurritos:', numOfBurritos);
 
         // Check if the generous burrito gifter can give a burrito
         const getAllowance = new Promise(
