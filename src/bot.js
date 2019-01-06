@@ -69,6 +69,10 @@ bot.message((msg) => {
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
     if(_.includes(msg.text, ':burrito:') && msg.text.match(/<@([A-Z0-9])+>/im)) {
 
+        // Check for multiple receviers
+        var numOfReceivers = (msg.text.match(/<@([A-Z0-9])+>/igm) || []).length;
+        console.log('numOfBurritos:', numOfReceivers);
+
         // Get number of burritos
         var numOfBurritos = (msg.text.match(/:burrito:/igm) || []).length;
         console.log('numOfBurritos:', numOfBurritos);
@@ -178,7 +182,7 @@ bot.message((msg) => {
                         icon_emoji: config('ICON_EMOJI'),
                         channel: givenTo,
                         username: 'Yo Burrito',
-                        text: `You received ${numOfBurritos} burrito(s) from ${msg.user}!`
+                        text: `You received ${numOfBurritos} burrito(s) from <@${msg.user}>!`
                     }, (err, data) => {
                         if (err) throw err
                     })
