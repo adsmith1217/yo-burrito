@@ -22,7 +22,7 @@ let attachments = [
                 'Want to bring Yo Burrito to your own channel?\n' +
                 'Use `/invite @yo_burrito`\n' +
                 ' \n' +
-                'Questions? <@Adam Smith> (amsmith@wmp.com)\n' +
+                'Questions? Ask Adam Smith (amsmith@wmp.com)\n' +
                 ' \n' +
                 'Repository: https://github.com/wmpcx/yo-burrito\n',
         mrkdwn_in: ['text']

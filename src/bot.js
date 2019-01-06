@@ -71,7 +71,19 @@ bot.message((msg) => {
 
         // Check for multiple receviers
         var numOfReceivers = (msg.text.match(/<@([A-Z0-9])+>/igm) || []).length;
-        console.log('numOfBurritos:', numOfReceivers);
+        console.log('numOfReceivers:', numOfReceivers);
+        if(numOfReceivers > 1) {
+            slack.chat.postMessage({
+                token: config('SLACK_TOKEN'),
+                icon_emoji: config('ICON_EMOJI'),
+                channel: msg.user,
+                username: 'Yo Burrito',
+                text: `You can only send burritos to a single person at a time right now. Bug Adam if you want this feature`
+            }, (err, data) => {
+                if (err) throw err
+            })
+            return
+        }
 
         // Get number of burritos
         var numOfBurritos = (msg.text.match(/:burrito:/igm) || []).length;
