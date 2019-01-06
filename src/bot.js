@@ -4,8 +4,8 @@
 const slack = require('slack')
 const _ = require('lodash')
 const config = require('./config')
-const mysql = require('mysql');
-const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL);
+const mysql = require('mysql')
+const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
 
 let bot = slack.rtm.client()
 
