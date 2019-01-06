@@ -47,26 +47,8 @@ bot.message((msg) => {
     // 🚫🌯 no burrito: don't do anything
     if (!_.includes(msg.text, ':burrito:')) return
 
-    // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
-    if (!_.includes(msg.text, /<@[A-Z 0-9]+>/igm)) {
-        console.log('burrito w/o mention')
-        slack.chat.postMessage({
-            response_type: 'ephemeral',
-            token: config('SLACK_TOKEN'),
-            icon_emoji: config('ICON_EMOJI'),
-            channel: msg.channel,
-            username: 'Yo Burrito',
-            text: 'Trying to send someone a burrito? Try mentioning them using @'
-        }, (err, data) => {
-            if (err) throw err
-            let txt = _.truncate(data.message.text)
-            console.log(`🤖🌯  I said: "${txt}"`)
-        })
-        return
-    }
-
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
-    if(_.includes(msg.text, ':burrito:') && _.includes(msg.text, /<@[A-Z 0-9]+>/igm)) {
+    if(_.includes(msg.text, ':burrito:') && _.includes(msg.text, /<@([A-Z 0-9])+>/igm)) {
 
         // Get number of burritos
         let numOfBurritos = msg.text.count(':burrito:')
@@ -188,6 +170,24 @@ bot.message((msg) => {
         }
 
         giveBurrito()
+    }
+
+    // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
+    if (!_.includes(msg.text, /<@[A-Z 0-9]+>/igm)) {
+        console.log('burrito w/o mention')
+        slack.chat.postMessage({
+            response_type: 'ephemeral',
+            token: config('SLACK_TOKEN'),
+            icon_emoji: config('ICON_EMOJI'),
+            channel: msg.channel,
+            username: 'Yo Burrito',
+            text: 'Trying to send someone a burrito? Try mentioning them using @'
+        }, (err, data) => {
+            if (err) throw err
+            let txt = _.truncate(data.message.text)
+            console.log(`🤖🌯  I said: "${txt}"`)
+        })
+        return
     }
 
 })
