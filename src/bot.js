@@ -23,8 +23,8 @@ bot.message((msg) => {
     console.log(msg.message)
     console.log(`msg.text undefined check`)
     console.log(msg.text === 'undefined')
-    console.log(`msg.message.text undefined check`)
-    console.log(msg.message.text === 'undefined')
+    console.log(`msg.message undefined check`)
+    console.log(msg.message === 'undefined')
 
     // Check for secondary thread message
     // if(msg.message !== 'undefined') return
