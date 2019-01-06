@@ -28,10 +28,15 @@ bot.message((msg) => {
     console.log(msg.message === 'undefined')
     console.log(msg.message != 'undefined')
     console.log(msg.message !== 'undefined')
+    console.log(msg.message == undefined)
+    console.log(msg.message === undefined)
+    console.log(msg.message != undefined)
+    console.log(msg.message !== undefined)
     if(msg.message) console.log('1')
+    if(!msg.message) console.log('2')
 
     // Check for secondary thread message
-    // if(msg.message !== 'undefined') return
+    if(msg.message) return
 
     // Has /🌯: don't do anything
     if (_.includes(msg.text, '/burrito')) return
