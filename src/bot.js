@@ -48,8 +48,9 @@ bot.message((msg) => {
     if (!_.includes(msg.text, ':burrito:')) return
 
     // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
-    if (!_.includes(msg.text, /<@([A-Z 0-9])+>/igm) && !_.includes(msg.text, /<@/igm)) {
+    if (!_.includes(msg.text, /<@([A-Z 0-9])+>/igm)) {
         slack.chat.postMessage({
+            response_type: 'ephemeral',
             token: config('SLACK_TOKEN'),
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.channel,
@@ -64,7 +65,11 @@ bot.message((msg) => {
     }
 
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
-    if(_.includes(msg.text, ':burrito:')) {
+    if(_.includes(msg.text, ':burrito:') && _.includes(msg.text, /<@([A-Z 0-9])+>/igm)) {
+
+        // Get number of burritos
+        let numOfBurritos = msg.text.count(':burrito:')
+        console.log('numOfBurritos', numOfBurritos)
 
         // Check if the generous burrito gifter can give a burrito
         const getAllowance = new Promise(
