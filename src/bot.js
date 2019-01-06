@@ -49,6 +49,8 @@ bot.message((msg) => {
     if (!_.includes(msg.text, ':burrito:')) return
 
     // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
+    // TODO: fix this
+    /*
     if (!_.includes(msg.text, /<@([A-Z 0-9])+>/igm) && _.includes(msg.text, /</igm)) {
         slack.chat.postMessage({
             token: config('SLACK_TOKEN'),
@@ -63,12 +65,14 @@ bot.message((msg) => {
         })
         return
     }
+    */
 
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
-    if(_.includes(msg.text, ':burrito:')) {
+    if(_.includes(msg.text, ':burrito:') && _.includes(msg.text, /<@([A-Z 0-9])+>/igm)) {
 
         // Get number of burritos
-        let numOfBurritos = msg.text.count(':burrito:')
+        let text = msg.text
+        let numOfBurritos = text.count(':burrito:')
         console.log('numOfBurritos', numOfBurritos)
 
         // Check if the generous burrito gifter can give a burrito
