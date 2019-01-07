@@ -17,12 +17,13 @@ let attachments = [
         text: 'Use @someone + Burrito Emoji to give a burrito\n' +
                 '`/burrito leaderboard` - top 10 burrito earners\n' +
                 '`/burrito mine` - your # of awarded burritos\n' +
-                '`/burrito help` ... you\'re lookin at it!\n' +
+                '`/burrito roadmap` - shows a list of future features\n' +
+                '`/burrito help` - you\'re lookin at it!\n' +
                 ' \n' +
                 'Want to bring Yo Burrito to your own channel?\n' +
                 'Use `/invite @yo_burrito`\n' +
                 ' \n' +
-                'Questions? Ask Adam Smith (amsmith@wmp.com)\n' +
+                'Questions? Ask Adam Smith (amsmith@wmp.com) or #yo-burrito\n' +
                 ' \n' +
                 'Repository: https://github.com/wmpcx/yo-burrito\n',
         mrkdwn_in: ['text']
