@@ -36,6 +36,8 @@ const handler = (payload, res) => {
                 let row = rows[i]
                 console.log('row ', row)
                 text += `#${i + 1}: <@${row.user_id}> - ${row.total_burritos}\n`
+            } else {
+                text = 'No burritos have been given yet! Use @someone + Burrito Emoji to give a burrito'
             }
         }
         console.log('text ',text)
