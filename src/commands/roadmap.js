@@ -30,7 +30,7 @@ let attachments = [
 ]
 
 const handler = (payload, res) => {
-    console.log('help command')
+    console.log('roadmap command')
     let msg = _.defaults({
         channel: payload.channel_name,
         attachments: attachments
