@@ -7,7 +7,6 @@
         "start": "node ./src",
         "daily-reset": "node ./src/tasks/daily-reset",
         "daily-lottery": "node ./src/tasks/daily-lottery",
-        "lottery": "node ./src/tasks/lottery",
         "test": "standard"
     },
     "author": {
