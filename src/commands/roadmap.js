@@ -22,7 +22,9 @@ let attachments = [
                 '6) Geolocation-based burrito restaurant locator\n' +
                 ' \n' +
                 '*Have an idea you\'d like to see here?*\n' +
-                '_Head over to #yo-burrito or contact Adam Smith (amsmith@wmp.com)_\n',
+                '_Head over to #yo-burrito or contact Adam Smith (amsmith@wmp.com)_\n' +
+                ' \n' +
+                'Buy Adam a burrito: Venmo @Adam-Smith-2369\n',
         mrkdwn_in: ['text']
     }
 ]
