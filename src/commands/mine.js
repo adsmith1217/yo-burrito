@@ -23,22 +23,23 @@ const handler = (payload, res) => {
             connection.query(mineQuery, (err, rows, fields) => {
                 // TODO: send error message
                 if (err) reject(err)
+                let totalBurritos = 0
                 if(typeof rows[0] !== 'undefined') {
-                    let totalBurritos = rows[0].total_burritos
-                    console.log(payload.user_id, ' has this many burritos: ', totalBurritos)
-                    let msg = _.defaults({
-                        channel: payload.channel_name,
-                        attachments: [
-                            {
-                                title: `You have ${totalBurritos} burritos`,
-                                color: '#2FA44F',
-                                mrkdwn_in: ['text']
-                            }
-                        ]
-                    }, msgDefaults)
-
-                    resolve(msg)
+                    totalBurritos = rows[0].total_burritos
                 }
+                console.log(payload.user_id, ' has this many burritos: ', totalBurritos)
+                let msg = _.defaults({
+                    channel: payload.channel_name,
+                    attachments: [
+                        {
+                            title: `You have ${totalBurritos} burritos`,
+                            color: '#2FA44F',
+                            mrkdwn_in: ['text']
+                        }
+                    ]
+                }, msgDefaults)
+
+                resolve(msg)
             })
         }
     )
