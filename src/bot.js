@@ -118,7 +118,6 @@ bot.message((msg) => {
                     givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
 
                     // Prevent self gifting
-                    /*
                     if(msg.user === givenTo) {
                         console.log('Trying to give burrito to self')
                         slack.chat.postMessage({
@@ -135,7 +134,6 @@ bot.message((msg) => {
                         })
                         return
                     }
-                    */
 
                     // TODO: condense into one query and add usernames to insert query
                     let timestamp = new Date().getTime()
