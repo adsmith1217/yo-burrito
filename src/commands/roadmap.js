@@ -20,6 +20,7 @@ let attachments = [
                 '4) Burrito ordering system (for purchasing of real life burritos!)\n' +
                 '5) Frontend site (yo-burrito.herokuapp.com)\n' +
                 '6) Geolocation-based burrito restaurant locator\n' +
+                '7) Burrito Bus - a lunch train for burritos\n' +
                 ' \n' +
                 '*Have an idea you\'d like to see here?*\n' +
                 '_Head over to #yo-burrito or contact Adam Smith (amsmith@wmp.com)_\n' +
