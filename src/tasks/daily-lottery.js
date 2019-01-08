@@ -12,7 +12,7 @@ const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
 var controller = Botkit.slackbot({})
 var bot = controller.spawn()
 
-bot.configureIncomingWebhook({ url: config('WEBHOOK_URL') })
+bot.configureIncomingWebhook({ url: config('GENERAL_WEBHOOK_URL') })
 
 const msgDefaults = {
     response_type: 'in_channel',
