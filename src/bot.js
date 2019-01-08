@@ -115,6 +115,9 @@ bot.message((msg) => {
             getAllowance
                 .then(dailyAllowance => {
                     let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
+                    // TODO: implement stronger sql injection protection
+                    let msgText = msg.text.replace("'","")
+                    console.log('msgText', msgText)
                     givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
 
                     // Prevent self gifting
@@ -139,7 +142,7 @@ bot.message((msg) => {
                     let timestamp = new Date().getTime()
                     let masterInsertQuery = `INSERT INTO burritos_master (burrito_id, given_by_username,` +
                             ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
-                            ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msg.text}', '${timestamp}');`
+                            ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msgText}', '${timestamp}');`
                     let givenToUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
                             ` VALUES ('${givenTo}', 1, 5, NULL) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + ${numOfBurritos};`
                     let allowanceUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
