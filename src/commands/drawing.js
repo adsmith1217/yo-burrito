@@ -17,7 +17,7 @@ const handler = (payload, res) => {
 
     const getAttachments = new Promise(
         (resolve, reject) => {
-            let drawingQuery = `SELECT user_id FROM burritos_master` +
+            let drawingQuery = `SELECT given_to_id FROM burritos_master` +
                 ` WHERE timestamp > 1554076800000 ORDER BY RAND() LIMIT 1;`
 
             console.log('drawingQuery: '+drawingQuery)
@@ -26,7 +26,7 @@ const handler = (payload, res) => {
                 if (err) reject(err)
                 let userId = ''
                 if(typeof rows[0] !== 'undefined') {
-                    userId = rows[0].user_id
+                    userId = rows[0].given_to_id
                 }
                 console.log(userId, ' has won the drawing')
                 let msg = _.defaults({
