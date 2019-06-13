@@ -21,6 +21,8 @@ let attachments = [
                 '5) Frontend site (yo-burrito.herokuapp.com)\n' +
                 '6) Geolocation-based burrito restaurant locator\n' +
                 '7) Burrito Bus - a lunch train for burritos\n' +
+                '8) Install Yo Burrito into other Slack orgs\n' +
+                '9) Burrito poll - burrito-themed polling system\n' +
                 ' \n' +
                 '*Have an idea you\'d like to see here?*\n' +
                 '_Head over to #yo-burrito or contact Adam Smith (amsmith@wmp.com)_\n' +
