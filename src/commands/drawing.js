@@ -33,11 +33,11 @@ const handler = (payload, res) => {
                     channel: payload.channel_name,
                     attachments: [
                         {
-                            title: `Congratulations, ${userId}!\n` +
+                            title: `Congratulations, <@${userId}>!\n` +
                                     `You have won the burrito drawing and a real burrito (or two)!\n` +
                                     `Now back to you Mike and Adam :wink::point_right:`,
                             color: '#2FA44F',
-                            text: `\nWant to learn more about me? Just type \`/burrito\` in any channel`,
+                            text: `Want to learn more about me? Just type \`/burrito\` in any channel`,
                             mrkdwn_in: ['text']
                         }
                     ]
