@@ -7,7 +7,7 @@ const mysql = require('mysql')
 const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
 
 const msgDefaults = {
-    response_type: 'in_channel',
+    response_type: 'ephemeral',
     username: 'Yo Burrito',
     icon_emoji: config('ICON_EMOJI')
 }
@@ -33,9 +33,7 @@ const handler = (payload, res) => {
                     channel: payload.channel_name,
                     attachments: [
                         {
-                            title: `Congratulations, <@${userId}>!\n` +
-                                    `You have won the burrito drawing and a real burrito (or two)!\n` +
-                                    `Now back to you Mike and Adam :wink::point_right:`,
+                            title: `Sorry, friend! The burrito drawing isn't active right now.\n`,
                             color: '#2FA44F',
                             text: `Want to learn more about me? Just type \`/burrito\` in any channel`,
                             mrkdwn_in: ['text']
