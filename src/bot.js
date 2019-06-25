@@ -256,12 +256,10 @@ bot.message((msg) => {
                     ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msgText}', '${timestamp}');`
             console.log('masterInsertQuery', masterInsertQuery)
 
-            for(let i = 0; i < numOfBurritos; i++) {
-                connection.query(masterInsertQuery, (err, rows, fields) => {
-                    if (err) throw err
-                    console.log('Added to commendations_master')
-                })
-            }
+            connection.query(masterInsertQuery, (err, rows, fields) => {
+                if (err) throw err
+                console.log('Added to commendations_master')
+            })
 
             // Send message to giver
             slack.chat.postMessage({
