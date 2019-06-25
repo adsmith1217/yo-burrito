@@ -46,10 +46,10 @@ bot.message((msg) => {
         return
     }
 
-    // 🚫🌯 no burrito: don't do anything
-    if (!_.includes(msg.text, ':burrito:')) return
+    // 🚫🌯||:wmp: no burrito or WMP spinner: don't do anything
+    if (!(_.includes(msg.text, ':burrito:') || _.includes(msg.text, ':wmp:'))) return
 
-    // 🌯 & 🚫😀 burrito but no mention: instruct the user to include a mention
+    // 🌯||:wmp: & 🚫😀 burrito but no mention: instruct the user to include a mention
     if (!msg.text.match(/<@([A-Z0-9])+>/im)) {
         slack.chat.postMessage({
             response_type: 'ephemeral',
@@ -57,7 +57,7 @@ bot.message((msg) => {
             icon_emoji: config('ICON_EMOJI'),
             channel: msg.user,
             username: 'Yo Burrito',
-            text: 'Trying to send someone a burrito? Try mentioning them using @'
+            text: 'Trying to send someone a burrito or :wmp:? Try mentioning them using @'
         }, (err, data) => {
             if (err) throw err
             let txt = _.truncate(data.message.text)
@@ -219,6 +219,75 @@ bot.message((msg) => {
         }
 
         giveBurrito()
+    }
+
+    // :wmp: & 😀 wmp spinner and mention: give that mention a commendation!
+    if(_.includes(msg.text, ':wmp:') && msg.text.match(/<@([A-Z0-9])+>/im)) {
+
+        const giveCommendation = function() {
+            let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
+            // TODO: implement stronger sql injection protection
+            let msgText = msg.text.replace("'","")
+            console.log('msgText', msgText)
+            givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
+
+            // Prevent self gifting
+            if(msg.user === givenTo) {
+                console.log('Trying to give commendation to self')
+                slack.chat.postMessage({
+                    response_type: 'ephemeral',
+                    token: config('SLACK_TOKEN'),
+                    icon_emoji: config('ICON_EMOJI'),
+                    channel: msg.user,
+                    username: 'Yo Burrito',
+                    text: 'You can\'t give commendations to yourself, silly!'
+                }, (err, data) => {
+                    if (err) throw err
+                    let txt = _.truncate(data.message.text)
+                    console.log(`🤖🌯  I said: "${txt}"`)
+                })
+                return
+            }
+
+            // TODO: condense into one query and add usernames to insert query
+            let timestamp = new Date().getTime()
+            let masterInsertQuery = `INSERT INTO commendations_master (commendation_id, given_by_username,` +
+                    ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
+                    ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msgText}', '${timestamp}');`
+            console.log('masterInsertQuery', masterInsertQuery)
+
+            for(let i = 0; i < numOfBurritos; i++) {
+                connection.query(masterInsertQuery, (err, rows, fields) => {
+                    if (err) throw err
+                    console.log('Added to commendations_master')
+                })
+            }
+
+            // Send message to giver
+            slack.chat.postMessage({
+                token: config('SLACK_TOKEN'),
+                icon_emoji: config('ICON_EMOJI'),
+                channel: msg.user,
+                username: 'Yo Burrito',
+                text: `You have given a commendation!`
+            }, (err, data) => {
+                if (err) {
+                    slack.chat.postMessage({
+                        token: config('SLACK_TOKEN'),
+                        icon_emoji: config('ICON_EMOJI'),
+                        channel: msg.user,
+                        username: 'Yo Burrito',
+                        text: `There was an error sending your commendation, please contact Adam`
+                    })
+                    throw err
+                }
+                let txt = _.truncate(data.message.text)
+                console.log(`🤖🌯  I said: "${txt}"`)
+            })
+            return
+        }
+
+        giveCommendation()
     }
 
 })
