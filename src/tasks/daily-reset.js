@@ -24,12 +24,13 @@ connection.query(dailyResetQuery, (err, rows, fields) => {
     console.log('console log - daily reset success');
 })
 
-// connection.end(function (err) {
-//     if (err) {
-//         console.log('console log - error code: ' + err.code);
-//         throw err;
-//     }
-//     // The connection is terminated now
-// });
+connection.end(function (err) {
+    if (err) {
+        console.log('console log - error code: ' + err.code);
+        throw err;
+    }
+    console.log('console log - connection ended on purpose');
+    // The connection is terminated now
+});
 
 return;
