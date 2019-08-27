@@ -14,30 +14,30 @@ bot.started((payload) => {
 })
 
 bot.message((msg) => {
-    console.log(`🤖🌯  Incoming message: "${msg.text}"`)
-    console.log('msg:')
+    console.log(`console log - 🤖🌯  Incoming message: "${msg.text}"`)
+    console.log('console log - msg:')
     console.log(msg)
 
     // Prevent secondary thread message
     if (msg.message) {
-        console.log('skipping due to secondary thread message')
+        console.log('console log - skipping due to secondary thread message')
         return
     }
-    console.log('passed secondary thread message check')
+    console.log('console log - passed secondary thread message check')
 
     // Check for a message sender
     if (!msg.user) {
-        console.log('skipping due to null message sender')
+        console.log('console log - skipping due to null message sender')
         return
     }
-    console.log('passed null message sender check')
+    console.log('console log - passed null message sender check')
 
     // Has /🌯 command: don't do anything
     if (_.includes(msg.text, '/burrito')) {
-        console.log('skipping due to slash command')
+        console.log('console log - skipping due to slash command')
         return
     }
-    console.log('passed slash command check')
+    console.log('console log - passed slash command check')
 
     // @yo_burrito says hey
     if (_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`) && msg.user != this.self.id) {
@@ -51,22 +51,22 @@ bot.message((msg) => {
                 `Not sure what to do? Try \`/burrito\` for help`
         }, (err, data) => {
             if (err) {
-                console.log('error during yo_burrito saying hi')
+                console.log('console log - error during yo_burrito saying hi')
                 throw err
             }
             let txt = _.truncate(data.message.text)
-            console.log(`🤖🌯  I said: "${txt}"`)
+                console.log(`console log - 🤖🌯  I said: "${txt}"`)
         })
         return
     }
-    console.log('passed saying hi check')
+    console.log('console log - passed saying hi check')
 
     // 🚫🌯||:wmp: no burrito or WMP spinner: don't do anything
     if (!(_.includes(msg.text, ':burrito:') || _.includes(msg.text, ':wmp:'))) {
-        console.log('skipping due to no burrito or spinner')
+        console.log('console log - skipping due to no burrito or spinner')
         return
     }
-    console.log('passed no burrito or spinner check')
+    console.log('console log - passed no burrito or spinner check')
 
     // 🌯||:wmp: & 🚫😀 burrito but no mention: instruct the user to include a mention
     if (!msg.text.match(/<@([A-Z0-9])+>/im)) {
@@ -79,23 +79,23 @@ bot.message((msg) => {
             text: 'Trying to send someone a burrito or :wmp:? Try mentioning them using @'
         }, (err, data) => {
             if (err) {
-                console.log('error telling user to include a mention')
+                console.log('console log - error telling user to include a mention')
                 throw err
             }
             let txt = _.truncate(data.message.text)
-            console.log(`🤖🌯  I said: "${txt}"`)
+                console.log(`console log - 🤖🌯  I said: "${txt}"`)
         })
         return
     }
-    console.log('passed mention check')
+    console.log('console log - passed mention check')
 
-    console.log('beginning burrito regex check')
+    console.log('console log - beginning burrito regex check')
     // 🌯 & 😀 burrito and mention: give that mention a burrito!
     if (_.includes(msg.text, ':burrito:') && msg.text.match(/<@([A-Z0-9])+>/im)) {
 
         // Check for multiple receviers
         var numOfReceivers = (msg.text.match(/<@([A-Z0-9])+>/igm) || []).length;
-        console.log('numOfReceivers:', numOfReceivers);
+        console.log('console log - numOfReceivers:', numOfReceivers);
         if (numOfReceivers > 1) {
             slack.chat.postMessage({
                 token: config('SLACK_TOKEN'),
@@ -111,14 +111,14 @@ bot.message((msg) => {
 
         // Get number of burritos
         var numOfBurritos = (msg.text.match(/:burrito:/igm) || []).length;
-        console.log('numOfBurritos:', numOfBurritos);
+        console.log('console log - numOfBurritos:', numOfBurritos);
 
         // Check if the generous burrito gifter can give a burrito
         const getAllowance = new Promise(
             (resolve, reject) => {
                 let allowanceCheckQuery = `SELECT daily_allowance FROM burritos_by_user` +
                     ` WHERE user_id = '${msg.user}' LIMIT 1;`
-                console.log('allowanceCheckQuery', allowanceCheckQuery)
+                console.log('console log - allowanceCheckQuery', allowanceCheckQuery)
                 connection.query(allowanceCheckQuery, (err, rows, fields) => {
                     if (err) throw err
                     let dailyAllowance = 5
@@ -136,18 +136,18 @@ bot.message((msg) => {
         )
 
         const giveBurrito = function () {
-            console.log('giveBurrito start');
+            console.log('console log - giveBurrito start');
             getAllowance
                 .then(dailyAllowance => {
                     let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
                     // TODO: implement stronger sql injection protection
                     let msgText = msg.text.replace("'", "")
-                    console.log('msgText in giveBurrito', msgText)
+                    console.log('console log - msgText in giveBurrito', msgText)
                     givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
 
                     // Prevent self gifting
                     if (msg.user === givenTo) {
-                        console.log('Trying to give burrito to self')
+                        console.log('console log - Trying to give burrito to self')
                         slack.chat.postMessage({
                             response_type: 'ephemeral',
                             token: config('SLACK_TOKEN'),
@@ -158,7 +158,7 @@ bot.message((msg) => {
                         }, (err, data) => {
                             if (err) throw err
                             let txt = _.truncate(data.message.text)
-                            console.log(`🤖🌯  I said: "${txt}"`)
+                                console.log(`console log - 🤖🌯  I said: "${txt}"`)
                         })
                         return
                     }
@@ -173,23 +173,23 @@ bot.message((msg) => {
                     let allowanceUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
                         ` VALUES ('${msg.user}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - ${numOfBurritos},` +
                         ` last_activity = ${timestamp};`
-                    console.log('masterInsertQuery', masterInsertQuery)
-                    console.log('givenToUpdateQuery', givenToUpdateQuery)
-                    console.log('allowanceUpdateQuery', allowanceUpdateQuery)
+                    console.log('console log - masterInsertQuery', masterInsertQuery)
+                    console.log('console log - givenToUpdateQuery', givenToUpdateQuery)
+                    console.log('console log - allowanceUpdateQuery', allowanceUpdateQuery)
 
                     for (let i = 0; i < numOfBurritos; i++) {
                         connection.query(masterInsertQuery, (err, rows, fields) => {
                             if (err) throw err
-                            console.log('Added to burritos_master')
+                            console.log('console log - Added to burritos_master')
                         })
                     }
                     connection.query(givenToUpdateQuery, (err, rows, fields) => {
                         if (err) throw err
-                        console.log('Updated burritos_by_user given_to')
+                        console.log('console log - Updated burritos_by_user given_to')
                     })
                     connection.query(allowanceUpdateQuery, (err, rows, fields) => {
                         if (err) throw err
-                        console.log('Updated burritos_by_user allowance')
+                        console.log('console log - Updated burritos_by_user allowance')
                     })
 
                     // Send message to giver
@@ -211,7 +211,7 @@ bot.message((msg) => {
                             throw err
                         }
                         let txt = _.truncate(data.message.text)
-                        console.log(`🤖🌯  I said: "${txt}"`)
+                            console.log(`console log - 🤖🌯  I said: "${txt}"`)
                     })
 
                     // Send message to receiver
@@ -245,9 +245,9 @@ bot.message((msg) => {
 
         giveBurrito()
     }
-    console.log('passed burrito regex and giveBurrito')
+    console.log('console log - passed burrito regex and giveBurrito')
 
-    console.log('beginning spinner regex check')
+    console.log('console log - beginning spinner regex check')
     // :wmp: & 😀 wmp spinner and mention: give that mention a commendation!
     if (_.includes(msg.text, ':wmp:') && msg.text.match(/<@([A-Z0-9])+>/im)) {
 
@@ -255,12 +255,12 @@ bot.message((msg) => {
             let givenTo = msg.text.match(/<@([A-Z0-9])+>/im)
             // TODO: implement stronger sql injection protection
             let msgText = msg.text.replace("'", "")
-            console.log('msgText', msgText)
+            console.log('console log - msgText', msgText)
             givenTo = givenTo[0].substring(2, givenTo[0].length - 1)
 
             // Prevent self gifting
             if (msg.user === givenTo) {
-                console.log('Trying to give commendation to self')
+                console.log('console log - Trying to give commendation to self')
                 slack.chat.postMessage({
                     response_type: 'ephemeral',
                     token: config('SLACK_TOKEN'),
@@ -271,7 +271,7 @@ bot.message((msg) => {
                 }, (err, data) => {
                     if (err) throw err
                     let txt = _.truncate(data.message.text)
-                    console.log(`🤖🌯  I said: "${txt}"`)
+                        console.log(`console log - 🤖🌯  I said: "${txt}"`)
                 })
                 return
             }
@@ -281,11 +281,11 @@ bot.message((msg) => {
             let masterInsertQuery = `INSERT INTO commendations_master (commendation_id, given_by_username,` +
                 ` given_to_username, given_by_id, given_to_id, message, timestamp)` +
                 ` VALUES (NULL, NULL, NULL, '${msg.user}', '${givenTo}', '${msgText}', '${timestamp}');`
-            console.log('masterInsertQuery', masterInsertQuery)
+            console.log('console log - masterInsertQuery', masterInsertQuery)
 
             connection.query(masterInsertQuery, (err, rows, fields) => {
                 if (err) throw err
-                console.log('Added to commendations_master')
+                console.log('console log - Added to commendations_master')
             })
 
             // Send message to giver
@@ -307,14 +307,14 @@ bot.message((msg) => {
                     throw err
                 }
                 let txt = _.truncate(data.message.text)
-                console.log(`🤖🌯  I said: "${txt}"`)
+                    console.log(`console log - 🤖🌯  I said: "${txt}"`)
             })
             return
         }
 
         giveCommendation()
     }
-    console.log('passed spinner regex and giveCommendation')
+    console.log('console log - passed spinner regex and giveCommendation')
 
 })
 
