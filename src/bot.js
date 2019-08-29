@@ -5,13 +5,21 @@ const slack = require('slack')
 const _ = require('lodash')
 const config = require('./config')
 const mysql = require('mysql')
-const connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
+let connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
 
 let bot = slack.rtm.client()
 
 bot.started((payload) => {
     this.self = payload.self
 })
+
+connection.on('close', function (err) {
+    console.log('console log - bot.js connection closed');
+});
+
+connection.on('error', function (err) {
+    console.log('console log - bot.js connection error: ' + err);
+});
 
 bot.message((msg) => {
     console.log(`console log - 🤖🌯  Incoming message: "${msg.text}"`)
@@ -317,5 +325,14 @@ bot.message((msg) => {
     console.log('console log - passed spinner regex and giveCommendation')
 
 })
+
+connection.end(function (err) {
+    if (err) {
+        console.log('console log - error code: ' + err.code);
+        throw err;
+    }
+    console.log('console log - bot.js connection ended on purpose');
+    // The connection is terminated now
+});
 
 module.exports = bot
