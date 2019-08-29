@@ -21,11 +21,11 @@ const msgDefaults = {
 }
 
 connection.on('close', function (err) {
-    console.log('console log - daily-lottery connection closed');
+    console.log('console log - connection closed');
 });
 
 connection.on('error', function (err) {
-    console.log('console log - daily-lottery connection error: ' + err);
+    console.log('console log - connection error: ' + err);
 });
 
 let dailyLotteryQuery = `SELECT user_id FROM burritos_by_user ORDER BY RAND() LIMIT 1;`
@@ -95,7 +95,7 @@ connection.end(function (err) {
         console.log('console log - error code: ' + err.code);
         throw err;
     }
-    console.log('console log - daily-lottery connection ended on purpose');
+    console.log('console log - connection ended on purpose');
     // The connection is terminated now
 });
 
