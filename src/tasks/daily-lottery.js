@@ -33,7 +33,10 @@ console.log('console log - dailyLotteryQuery', dailyLotteryQuery)
 
 // Get the lucky winner
 connection.query(dailyLotteryQuery, (err, rows, fields) => {
-    if (err) throw err
+    if (err) {
+        console.log('console log - error dailyLotteryQuery code: ' + err.code);
+         throw err;
+    }
     let user = rows[0].user_id
     console.log('console log - winner: ',user)
 
@@ -54,7 +57,10 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
     }, msgDefaults)
 
     bot.sendWebhook(msg, (err, res) => {
-        if (err) throw err
+        if (err) {
+            console.log('console log - error sendWebhook code: ' + err.code);
+            throw err;
+        }
         console.log('console log - Daily Lottery job complete')
     })
 
@@ -69,11 +75,17 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
     console.log('console log - givenToUpdateQuery', givenToUpdateQuery)
 
     connection.query(masterInsertQuery, (err, rows, fields) => {
-        if (err) throw err
+        if (err) {
+            console.log('console log - error masterInsertQuery code: ' + err.code);
+            throw err;
+        }
         console.log('console log - Added to burritos_master')
     })
     connection.query(givenToUpdateQuery, (err, rows, fields) => {
-        if (err) throw err
+        if (err) {
+            console.log('console log - error givenToUpdateQuery code: ' + err.code);
+            throw err;
+        }
         console.log('console log - Updated burritos_by_user')
     })
 })
