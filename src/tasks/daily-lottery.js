@@ -37,8 +37,8 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
         console.log('console log - error dailyLotteryQuery code: ' + err.code);
         throw err;
     }
-    // let user = rows[0].user_id
-    let user = 'U94Q4683S';
+    let user = rows[0].user_id
+    // let user = 'U94Q4683S';
     console.log('console log - winner: ',user)
 
     var attachments = [
@@ -52,15 +52,15 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
         }
     ];
 
-    // let msg = _.defaults({
-    //     channel: '#general',
-    //     attachments: attachments
-    // }, msgDefaults)
-
     let msg = _.defaults({
-        channel: 'GEGGV3A5P',
+        channel: '#general',
         attachments: attachments
     }, msgDefaults)
+
+    // let msg = _.defaults({
+    //     channel: 'GEGGV3A5P',
+    //     attachments: attachments
+    // }, msgDefaults)
 
     console.log('msg: '+JSON.stringify(msg));
 
@@ -105,15 +105,5 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
         console.log('console log - Updated burritos_by_user')
     })
 })
-
-// connection.end(function (err) {
-//     if (err) {
-//         console.log('console log - error code: ' + err.code);
-//         throw err;
-//     }
-//     console.log('console log - connection ended on purpose');
-//     // The connection is terminated now
-// });
-
 
 return
