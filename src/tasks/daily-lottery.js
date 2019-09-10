@@ -21,11 +21,11 @@ const msgDefaults = {
 }
 
 connection.on('close', function (err) {
-    console.log('console log - connection closed');
+    console.log('console log - connection closed daily-lottery');
 });
 
 connection.on('error', function (err) {
-    console.log('console log - connection error: ' + err);
+    console.log('console log - connection error daily-lottery: ' + err);
 });
 
 let dailyLotteryQuery = `SELECT user_id FROM burritos_by_user ORDER BY RAND() LIMIT 1;`
@@ -35,7 +35,7 @@ console.log('console log - dailyLotteryQuery', dailyLotteryQuery)
 connection.query(dailyLotteryQuery, (err, rows, fields) => {
     if (err) {
         console.log('console log - error dailyLotteryQuery code: ' + err.code);
-         throw err;
+        throw err;
     }
     let user = rows[0].user_id
     console.log('console log - winner: ',user)
