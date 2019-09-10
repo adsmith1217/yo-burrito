@@ -94,6 +94,14 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
             console.log('console log - error givenToUpdateQuery code: ' + err.code);
             throw err;
         }
+        connection.end(function (err) {
+            if (err) {
+                console.log('console log - error code: ' + err.code);
+                throw err;
+            }
+            console.log('console log - connection ended on purpose');
+            // The connection is terminated now
+        });
         console.log('console log - Updated burritos_by_user')
     })
 })
