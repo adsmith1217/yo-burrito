@@ -5,6 +5,7 @@ const slack = require('slack')
 const _ = require('lodash')
 const config = require('./config')
 const mysql = require('mysql')
+let connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
 
 let bot = slack.rtm.client()
 
@@ -13,7 +14,6 @@ bot.started((payload) => {
 })
 
 bot.message((msg) => {
-    let connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
     console.log(`console log - 🤖🌯  Incoming message: "${msg.text}"`)
     console.log('console log - msg:')
     console.log(msg)
@@ -240,6 +240,16 @@ bot.message((msg) => {
                             throw err;
                         }
                     })
+
+                    connection.end(function (err) {
+                        if (err) {
+                            console.log('console log - error code: ' + err.code);
+                            throw err;
+                        }
+                        console.log('console log - connection ended on purpose');
+                        // The connection is terminated now
+                    });
+
                     return
                 })
                 .catch(error => {
@@ -258,6 +268,16 @@ bot.message((msg) => {
                         let txt = _.truncate(data.message.text)
                         console.log(`🤖🌯  I said: "${txt}"`)
                     })
+
+                    connection.end(function (err) {
+                        if (err) {
+                            console.log('console log - error code: ' + err.code);
+                            throw err;
+                        }
+                        console.log('console log - connection ended on purpose');
+                        // The connection is terminated now
+                    });
+
                     return
                 })
         }
@@ -292,6 +312,16 @@ bot.message((msg) => {
                     let txt = _.truncate(data.message.text)
                         console.log(`console log - 🤖🌯  I said: "${txt}"`)
                 })
+
+                connection.end(function (err) {
+                    if (err) {
+                        console.log('console log - error code: ' + err.code);
+                        throw err;
+                    }
+                    console.log('console log - connection ended on purpose');
+                    // The connection is terminated now
+                });
+
                 return
             }
 
@@ -328,6 +358,16 @@ bot.message((msg) => {
                 let txt = _.truncate(data.message.text)
                     console.log(`console log - 🤖🌯  I said: "${txt}"`)
             })
+
+            connection.end(function (err) {
+                if (err) {
+                    console.log('console log - error code: ' + err.code);
+                    throw err;
+                }
+                console.log('console log - connection ended on purpose');
+                // The connection is terminated now
+            });
+
             return
         }
 
@@ -335,14 +375,5 @@ bot.message((msg) => {
     }
     console.log('console log - passed spinner regex and giveCommendation')
 })
-
-connection.end(function (err) {
-    if (err) {
-        console.log('console log - error code: ' + err.code);
-        throw err;
-    }
-    console.log('console log - connection ended on purpose');
-    // The connection is terminated now
-});
 
 module.exports = bot
