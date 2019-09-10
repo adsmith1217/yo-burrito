@@ -334,15 +334,15 @@ bot.message((msg) => {
         giveCommendation()
     }
     console.log('console log - passed spinner regex and giveCommendation')
-
-    connection.end(function (err) {
-        if (err) {
-            console.log('console log - error code: ' + err.code);
-            throw err;
-        }
-        console.log('console log - connection ended on purpose');
-        // The connection is terminated now
-    });
 })
+
+connection.end(function (err) {
+    if (err) {
+        console.log('console log - error code: ' + err.code);
+        throw err;
+    }
+    console.log('console log - connection ended on purpose');
+    // The connection is terminated now
+});
 
 module.exports = bot
