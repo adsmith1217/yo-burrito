@@ -120,7 +120,10 @@ bot.message((msg) => {
                     ` WHERE user_id = '${msg.user}' LIMIT 1;`
                 console.log('console log - allowanceCheckQuery', allowanceCheckQuery)
                 connection.query(allowanceCheckQuery, (err, rows, fields) => {
-                    if (err) throw err
+                    if (err) {
+                        console.log('console log - error in allowanceCheckQuery: ' + err.code);
+                        throw err;
+                    }
                     let dailyAllowance = 5
                     if (typeof rows[0] !== 'undefined') {
                         dailyAllowance = rows[0].daily_allowance
@@ -179,16 +182,25 @@ bot.message((msg) => {
 
                     for (let i = 0; i < numOfBurritos; i++) {
                         connection.query(masterInsertQuery, (err, rows, fields) => {
-                            if (err) throw err
+                            if (err) {
+                                console.log('console log - error in added to burritos_master: ' + err.code);
+                                throw err;
+                            }
                             console.log('console log - Added to burritos_master')
                         })
                     }
                     connection.query(givenToUpdateQuery, (err, rows, fields) => {
-                        if (err) throw err
+                        if (err) {
+                            console.log('console log - error in added to burritos_by_user given_to: ' + err.code);
+                            throw err;
+                        }
                         console.log('console log - Updated burritos_by_user given_to')
                     })
                     connection.query(allowanceUpdateQuery, (err, rows, fields) => {
-                        if (err) throw err
+                        if (err) {
+                            console.log('console log - error in added to burritos_by_user allowance: ' + err.code);
+                            throw err;
+                        }
                         console.log('console log - Updated burritos_by_user allowance')
                     })
 
@@ -207,7 +219,8 @@ bot.message((msg) => {
                                 channel: msg.user,
                                 username: 'Yo Burrito',
                                 text: `There was an error sending your burrito to <@${givenTo}> :(`
-                            })
+                            });
+                            console.log('console log - error in slack message to giver: ' + err.code);
                             throw err
                         }
                         let txt = _.truncate(data.message.text)
@@ -222,7 +235,10 @@ bot.message((msg) => {
                         username: 'Yo Burrito',
                         text: `You received ${numOfBurritos} burrito(s) from <@${msg.user}>!`
                     }, (err, data) => {
-                        if (err) throw err
+                        if (err) {
+                            console.log('console log - error in slack message to receiver: '+ err.code);
+                            throw err;
+                        }
                     })
                     return
                 })
@@ -235,7 +251,10 @@ bot.message((msg) => {
                         username: 'Yo Burrito',
                         text: error
                     }, (err, data) => {
-                        if (err) throw err
+                        if (err) {
+                            console.log('console log - error in giveBurrito catch: ' + err.code);
+                            throw err;
+                        }
                         let txt = _.truncate(data.message.text)
                         console.log(`🤖🌯  I said: "${txt}"`)
                     })
