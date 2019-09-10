@@ -37,7 +37,8 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
         console.log('console log - error dailyLotteryQuery code: ' + err.code);
         throw err;
     }
-    let user = rows[0].user_id
+    // let user = rows[0].user_id
+    let user = 'U94Q4683S';
     console.log('console log - winner: ',user)
 
     var attachments = [
@@ -51,8 +52,13 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
         }
     ];
 
+    // let msg = _.defaults({
+    //     channel: '#general',
+    //     attachments: attachments
+    // }, msgDefaults)
+
     let msg = _.defaults({
-        channel: '#general',
+        channel: '#yo-burrito-testing',
         attachments: attachments
     }, msgDefaults)
 
