@@ -62,6 +62,8 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
         attachments: attachments
     }, msgDefaults)
 
+    console.log('msg: '+JSON.stringify(msg));
+
     bot.sendWebhook(msg, (err, res) => {
         if (err) {
             console.log('console log - error sendWebhook code: ' + err.code);
