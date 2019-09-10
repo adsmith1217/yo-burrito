@@ -5,7 +5,6 @@ const slack = require('slack')
 const _ = require('lodash')
 const config = require('./config')
 const mysql = require('mysql')
-let connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
 
 let bot = slack.rtm.client()
 
@@ -14,6 +13,7 @@ bot.started((payload) => {
 })
 
 bot.message((msg) => {
+    let connection = mysql.createConnection(process.env.JAWSDB_MARIA_URL)
     console.log(`console log - 🤖🌯  Incoming message: "${msg.text}"`)
     console.log('console log - msg:')
     console.log(msg)
