@@ -58,7 +58,7 @@ connection.query(dailyLotteryQuery, (err, rows, fields) => {
     // }, msgDefaults)
 
     let msg = _.defaults({
-        channel: '#yo-burrito-testing',
+        channel: 'GEGGV3A5P',
         attachments: attachments
     }, msgDefaults)
 
