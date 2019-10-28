@@ -5,6 +5,7 @@
     "main": "src/index.js",
     "scripts": {
         "start": "node ./src",
+        "quarterly-reset": "node ./src/tasks/quarterly-reset",
         "daily-reset": "node ./src/tasks/daily-reset",
         "daily-lottery": "node ./src/tasks/daily-lottery",
         "test": "standard"
