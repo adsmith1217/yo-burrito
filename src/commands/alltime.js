@@ -67,4 +67,4 @@ const handler = (payload, res) => {
     getLeaderboard();
 }
 
-module.exports = { pattern: /leaderboard/ig, handler: handler }
+module.exports = { pattern: /alltime/ig, handler: handler }

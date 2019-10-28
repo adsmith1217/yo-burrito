@@ -12,7 +12,8 @@ Reward your teammates with burritos!
 Create a `/burrito` [custom slash command](https://api.slack.com/slash-commands), using the URL: `{app-name}.herokuapp.com/commands/burrito`. *Take note of the provided `token`, this is used to verify requests come from Slack.*
 
 - `/burrito` or `/burrito help` - list available commands
-- `/burrito leaderboard` - top 10 burrito earners
+- `/burrito leaderboard` - quarterly leaderboard
+- `/burrito alltime` - all time leaderboard
 - `/burrito mine` - your # of awarded burritos
 
 ### Install

@@ -15,7 +15,8 @@ let attachments = [
         title: 'Yo Burrito - because Hey Taco was too expensive',
         color: '#2FA44F',
         text: 'Use @someone + Burrito Emoji to give a burrito\n' +
-                '`/burrito leaderboard` - top 10 burrito earners\n' +
+                '`/burrito leaderboard` - quarterly leaderboard\n' +
+                '`/burrito alltime` - all time leaderboard\n' +
                 '`/burrito mine` - your # of awarded burritos\n' +
                 '`/burrito roadmap` - shows a list of future features\n' +
                 '`/burrito help` - you\'re lookin at it!\n' +
