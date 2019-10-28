@@ -17,7 +17,7 @@ const handler = (payload, res) => {
 
     const getAttachments = new Promise(
         (resolve, reject) => {
-            let leaderboardQuery = `SELECT user_id, total_burritos FROM burritos_quarterly` +
+            let leaderboardQuery = `SELECT user_id, total_burritos FROM burritos_by_user` +
             ` WHERE total_burritos > 0 ORDER BY total_burritos DESC;`
             console.log('leaderboardQuery: '+leaderboardQuery)
             connection.query(leaderboardQuery, (err, rows, fields) => {
