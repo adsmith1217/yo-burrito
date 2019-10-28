@@ -176,8 +176,8 @@ bot.message((msg) => {
                     let allowanceUpdateQuery = `INSERT INTO burritos_by_user (user_id, total_burritos, daily_allowance, last_activity)` +
                         ` VALUES ('${msg.user}', 0, 4, ${timestamp}) ON DUPLICATE KEY UPDATE daily_allowance = daily_allowance - ${numOfBurritos},` +
                         ` last_activity = ${timestamp};`
-                    let quarterlyUpdateQuery = `INSERT INTO burritos_quarterly (user_id, total_burritos, last_activity)` +
-                        ` VALUES ('${givenTo}', 1, NULL) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + ${numOfBurritos};`
+                    let quarterlyUpdateQuery = `INSERT INTO burritos_quarterly (user_id, total_burritos)` +
+                        ` VALUES ('${givenTo}', 1) ON DUPLICATE KEY UPDATE total_burritos = total_burritos + ${numOfBurritos};`
                     console.log('console log - masterInsertQuery', masterInsertQuery)
                     console.log('console log - givenToUpdateQuery', givenToUpdateQuery)
                     console.log('console log - allowanceUpdateQuery', allowanceUpdateQuery)
