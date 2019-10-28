@@ -42,7 +42,7 @@ const handler = (payload, res) => {
             channel: payload.channel_name,
             attachments: [
                 {
-                    title: ':burrito: Leaderboard',
+                    title: ':burrito: Quarterly Leaderboard',
                     color: '#2FA44F',
                     text: text,
                     mrkdwn_in: ['text']

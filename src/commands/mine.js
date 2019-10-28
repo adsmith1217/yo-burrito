@@ -66,4 +66,4 @@ const handler = (payload, res) => {
     });
 }
 
-module.exports = { pattern: /mine/ig, handler: handler }
+module.exports = { pattern: /mine-broken/ig, handler: handler }

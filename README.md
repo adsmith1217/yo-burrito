@@ -14,7 +14,7 @@ Create a `/burrito` [custom slash command](https://api.slack.com/slash-commands)
 - `/burrito` or `/burrito help` - list available commands
 - `/burrito leaderboard` - quarterly leaderboard
 - `/burrito alltime` - all time leaderboard
-- `/burrito mine` - your # of awarded burritos
+<!-- - `/burrito mine` - your # of awarded burritos -->
 
 ### Install
 
